@@ -1,0 +1,6 @@
+test-output
+.classpath
+.project
+testng.xml
+failed_screenshots
+.settings
