@@ -1,4 +1,4 @@
-package pom;
+package pom.contact_pages;
 
 import java.io.IOException;
 import org.openqa.selenium.WebDriver;
@@ -7,8 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import generic.Verification;
 
-public class Contactpage extends Verification
-{
+public class ContactPage extends Verification{
 	// 1. find all the Webelements in your page.(private)  (declaration)
 		// 2. initialize all the webelements using the constructor. ( initialization)
 		// 3. make functions to perform actions in those web elements.  ( utilization)
@@ -54,7 +53,7 @@ public class Contactpage extends Verification
 	private WebElement cartIcon;
 	
 	// initialization 
-	public Contactpage(WebDriver driver)
+	public ContactPage(WebDriver driver)
 	{
 		super(driver);
 		PageFactory.initElements(driver, this);

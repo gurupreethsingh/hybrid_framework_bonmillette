@@ -1,12 +1,10 @@
-package pom;
+package pom.common_pages;
 
 import java.io.IOException;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import generic.Verification;
 
 public class OurStoryPage extends Verification
@@ -145,8 +143,5 @@ public class OurStoryPage extends Verification
 	public void verifyOutStoryPageUrl(String expectedUrl) throws IOException
 	{
 		verifyUrl(expectedUrl);
-	}
-	
-	
-	
+	}	
 }

@@ -1,4 +1,4 @@
-package pom;
+package pom.common_pages;
 
 import java.io.IOException;
 import org.openqa.selenium.WebDriver;
@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import generic.Verification;
 
-public class Homepage extends Verification
+public class Contactpage extends Verification
 {
 	// 1. find all the Webelements in your page.(private)  (declaration)
 		// 2. initialize all the webelements using the constructor. ( initialization)
@@ -54,7 +54,7 @@ public class Homepage extends Verification
 	private WebElement cartIcon;
 	
 	// initialization 
-	public Homepage(WebDriver driver)
+	public Contactpage(WebDriver driver)
 	{
 		super(driver);
 		PageFactory.initElements(driver, this);
@@ -105,11 +105,11 @@ public class Homepage extends Verification
 		cartIcon.click();
 	}
 	
-	public void verifyHomepageTitle(String expectedHomepageTitle) throws IOException{
-		verifyTitle(expectedHomepageTitle);   // Verification class function.
+	public void verifyContactpageTitle(String expectedTitle) throws IOException{
+		verifyTitle(expectedTitle);   // Verification class function.
 	}
 	
-	public void verifyHomepageUrl(String expectedUrl) throws IOException
+	public void verifyContactpageUrl(String expectedUrl) throws IOException
 	{
 		verifyUrl(expectedUrl);
 	}

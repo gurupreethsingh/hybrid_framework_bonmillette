@@ -1,20 +1,14 @@
-package pom;
-
-
+package pom.common_pages;
 
 import java.io.IOException;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import generic.Verification;
 
 public class Testimonialspage extends Verification{
 	public static WebDriver driver;
-	
-	//declaration
 	
 	// declare all the webElements, keep them private. 
 		@FindBy(xpath="//img[@class='w-20 h-20']")
@@ -62,16 +56,12 @@ public class Testimonialspage extends Verification{
 	@FindBy(xpath="(//p[@class='text-lg font-medium text-gray-700'])[1]")
 	private WebElement testimonialTextCard;
 	
-	
-	
-	
 	//constructor
 	 Testimonialspage()
 	{
 		super(driver);
 		PageFactory.initElements(driver, this);
 	}
-	
 	
 	//utilization
 	public void clickOnTestimonialsLink()
@@ -98,9 +88,4 @@ public class Testimonialspage extends Verification{
 	{
 		verifyUrl(expectedUrl);
 	}
-
-
-	
-	
 }
-

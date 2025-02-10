@@ -1,4 +1,5 @@
-package pom;
+package pom.blog_pages;
+
 
 import java.io.IOException;
 import org.openqa.selenium.WebDriver;
@@ -7,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import generic.Verification;
 
-public class Shoppage extends Verification
+public class AllBlogspage extends Verification
 {
 	// 1. find all the Webelements in your page.(private)  (declaration)
 		// 2. initialize all the webelements using the constructor. ( initialization)
@@ -54,7 +55,7 @@ public class Shoppage extends Verification
 	private WebElement cartIcon;
 	
 	// initialization 
-	public Shoppage(WebDriver driver)
+	public AllBlogspage(WebDriver driver)
 	{
 		super(driver);
 		PageFactory.initElements(driver, this);
@@ -105,12 +106,13 @@ public class Shoppage extends Verification
 		cartIcon.click();
 	}
 	
-	public void verifyShoppageTitle(String expectedTitle) throws IOException{
+	public void verifyAllBlogspageTitle(String expectedTitle) throws IOException{
 		verifyTitle(expectedTitle);   // Verification class function.
 	}
 	
-	public void verifyShoppageUrl(String expectedUrl) throws IOException
+	public void verifyAllBlogspageUrl(String expectedUrl) throws IOException
 	{
 		verifyUrl(expectedUrl);
 	}
 }
+

@@ -1,4 +1,4 @@
-package pom;
+package pom.common_pages;
 
 import java.io.IOException;
 
@@ -146,3 +146,4 @@ public class AboutUsPage extends Verification
 	}
 
 }
+
