@@ -6,8 +6,8 @@ import org.testng.annotations.Test;
 
 import generic.Excel;
 import generic.OpenClose;
-import pom.Homepage;
-import pom.Shoppage;
+import pom.common_pages.Homepage;
+
 
 public class TestOpenHomepage extends OpenClose
 {
