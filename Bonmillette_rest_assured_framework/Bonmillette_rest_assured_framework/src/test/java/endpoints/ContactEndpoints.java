@@ -1,6 +1,7 @@
 package endpoints;
   
 import payload.Contact;
+import routes.Category_routes;
 import routes.Contact_routes;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -54,14 +55,18 @@ public class ContactEndpoints {
 		
 		public static Response getContactById(String id)
 		{
-			Response response=given()
-					.pathParam("id", id)
+			Response response = null;
+			  try {
+			     response=given()
 					.when()
-			        .get(Contact_routes.get_fetch_message_by_id_url);
+			        .get(Contact_routes.get_fetch_message_by_id_url.replace(":id", id));
+			  }
+			  catch (Exception ex) {
+		            ex.printStackTrace();
+		        }
+			  
 			return response;
 		}
-		
-		
 		
 		
 		public static Response getAllMessageCount()
