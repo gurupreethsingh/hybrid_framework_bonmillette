@@ -1,50 +1,15 @@
 package pom.vendor_pages;
 
-import java.io.IOException;
-import java.util.List;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.WebDriver;
+import org.testng.asserts.SoftAssert;
+import java.util.List;
+
 import generic.Verification;
 
 public class AllVendorsPage extends Verification {
-
-    // Page Header
-    @FindBy(xpath = "//h2[contains(text(),'All Vendors')]")
-    private WebElement allVendorsHeading;
-
-    // Search Field
-    @FindBy(xpath = "//input[@placeholder='Search vendors...']")
-    private WebElement searchField;
-
-    // Add Vendor Button
-    @FindBy(xpath = "//button[contains(text(),'Add Vendor')]")
-    private WebElement addVendorButton;
-
-    // View Icons
-    @FindBy(xpath = "//svg[contains(@class, 'cursor-pointer')]")
-    private List<WebElement> viewIcons;
-
-    // List of Vendors (Grid View)
-    @FindBy(xpath = "//div[contains(@class,'grid')]/div")
-    private List<WebElement> vendorGridItems;
-
-    // List of Vendors (Card View)
-    @FindBy(xpath = "//div[contains(@class,'shadow-lg') and contains(@class,'p-6')]")
-    private List<WebElement> vendorCardItems;
-
-    // List of Vendors (List View)
-    @FindBy(xpath = "//div[contains(@class,'space-y-6')]/div")
-    private List<WebElement> vendorListItems;
-
-    // Delete Vendor Buttons
-    @FindBy(xpath = "//button[contains(@class,'text-red-500')]")
-    private List<WebElement> deleteVendorButtons;
-
-    // Vendor Name Links
-    @FindBy(xpath = "//a[contains(@href,'/single-vendor')]")
-    private List<WebElement> vendorNameLinks;
 
     // Constructor
     public AllVendorsPage(WebDriver driver) {
@@ -52,63 +17,114 @@ public class AllVendorsPage extends Verification {
         PageFactory.initElements(driver, this);
     }
 
-    // Get All Vendors Heading
-    public String getAllVendorsHeading() {
-        return allVendorsHeading.getText();
-    }
+    // Page Elements
 
-    // Enter Search Query
+    // Search Field
+    @FindBy(xpath = "//input[@placeholder='Search vendors...']")
+    private WebElement searchField;
+
+    // View Controls
+    @FindBy(xpath = "//fa-icon[contains(@class,'fa-th-list')]")
+    private WebElement listViewButton;
+
+    @FindBy(xpath = "//fa-icon[contains(@class,'fa-th-large')]")
+    private WebElement cardViewButton;
+
+    @FindBy(xpath = "//fa-icon[contains(@class,'fa-th')]")
+    private WebElement gridViewButton;
+
+    // Vendor List (Grid / Card / List)
+    @FindBy(xpath = "//div[contains(@class,'grid')]//h3")
+    private List<WebElement> vendorGridList;
+
+    @FindBy(xpath = "//div[contains(@class,'shadow-lg')]//h3")
+    private List<WebElement> vendorCardList;
+
+    @FindBy(xpath = "//div[contains(@class,'space-y-6')]//h3")
+    private List<WebElement> vendorListView;
+
+    // Delete Vendor Buttons
+    @FindBy(xpath = "//button[contains(@class,'text-red-500')]")
+    private List<WebElement> deleteVendorButtons;
+
+    // Add Vendor Button
+    @FindBy(xpath = "//button[contains(text(),'Add Vendor')]")
+    private WebElement addVendorButton;
+
+    // Methods for Vendor Search
     public void enterSearchQuery(String query) {
         searchField.clear();
         searchField.sendKeys(query);
     }
 
-    // Click Add Vendor Button
+    // Methods to Change Views
+    public void switchToListView() {
+        listViewButton.click();
+    }
+
+    public void switchToCardView() {
+        cardViewButton.click();
+    }
+
+    public void switchToGridView() {
+        gridViewButton.click();
+    }
+
+    // Methods to Interact with Vendors
+    public void selectVendorFromGrid(int index) {
+        if (!vendorGridList.isEmpty() && index < vendorGridList.size()) {
+            vendorGridList.get(index).click();
+        }
+    }
+
+    public void selectVendorFromCard(int index) {
+        if (!vendorCardList.isEmpty() && index < vendorCardList.size()) {
+            vendorCardList.get(index).click();
+        }
+    }
+
+    public void selectVendorFromList(int index) {
+        if (!vendorListView.isEmpty() && index < vendorListView.size()) {
+            vendorListView.get(index).click();
+        }
+    }
+
+    public void deleteVendor(int index) {
+        if (!deleteVendorButtons.isEmpty() && index < deleteVendorButtons.size()) {
+            deleteVendorButtons.get(index).click();
+            acceptAlert(); // Handle confirmation popup
+        }
+    }
+
     public void clickAddVendorButton() {
         addVendorButton.click();
     }
 
-    // Click on View Icons (List, Grid, or Card)
-    public void selectView(String view) {
-        if (view.equalsIgnoreCase("list") && viewIcons.size() > 0) {
-            viewIcons.get(0).click();
-        } else if (view.equalsIgnoreCase("card") && viewIcons.size() > 1) {
-            viewIcons.get(1).click();
-        } else if (view.equalsIgnoreCase("grid") && viewIcons.size() > 2) {
-            viewIcons.get(2).click();
-        }
+    // Verification Methods using SoftAssert
+    public void verifyPageTitle(String expectedTitle, SoftAssert softAssert) {
+        verifyTitle(expectedTitle, softAssert);
     }
 
-    // Get Vendor Count in Grid View
-    public int getVendorGridCount() {
-        return vendorGridItems.size();
+    public void verifyPageUrl(String expectedUrl, SoftAssert softAssert) {
+        verifyUrl(expectedUrl, softAssert);
     }
 
-    // Get Vendor Count in Card View
-    public int getVendorCardCount() {
-        return vendorCardItems.size();
+    public void verifySearchField(SoftAssert softAssert) {
+        softAssert.assertTrue(searchField.isDisplayed(), "❌ Search field is missing.");
     }
 
-    // Get Vendor Count in List View
-    public int getVendorListCount() {
-        return vendorListItems.size();
+    public void verifyViewButtons(SoftAssert softAssert) {
+        softAssert.assertTrue(listViewButton.isDisplayed(), "❌ List view button is missing.");
+        softAssert.assertTrue(cardViewButton.isDisplayed(), "❌ Card view button is missing.");
+        softAssert.assertTrue(gridViewButton.isDisplayed(), "❌ Grid view button is missing.");
     }
 
-    // Click on a Vendor
-    public void clickVendor(int index) {
-        if (vendorNameLinks.size() > index) {
-            vendorNameLinks.get(index).click();
-        }
+    public void verifyVendorList(SoftAssert softAssert) {
+        softAssert.assertTrue(!vendorGridList.isEmpty() || !vendorCardList.isEmpty() || !vendorListView.isEmpty(), 
+            "❌ No vendors found.");
     }
 
-
-    // Verify All Vendors Page Title
-    public void verifyAllVendorsTitle(String expectedTitle) throws IOException {
-        verifyTitle(expectedTitle);
-    }
-
-    // Verify All Vendors Page URL
-    public void verifyAllVendorsUrl(String expectedUrl) throws IOException {
-        verifyUrl(expectedUrl);
+    public void verifyAddVendorButton(SoftAssert softAssert) {
+        softAssert.assertTrue(addVendorButton.isDisplayed(), "❌ Add Vendor button is missing.");
     }
 }

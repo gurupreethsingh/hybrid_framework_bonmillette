@@ -1,67 +1,52 @@
 package pom.vendor_pages;
 
-import java.io.IOException;
-import java.util.List;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.asserts.SoftAssert;
+import java.util.List;
+
 import generic.Verification;
 
 public class AllRawMaterialsPage extends Verification {
 
-    // Page Header
-    @FindBy(xpath = "//h1[contains(text(),'All Raw Materials')]")
-    private WebElement allRawMaterialsHeading;
+    // Constructor
+    public AllRawMaterialsPage(WebDriver driver) {
+        super(driver);
+        PageFactory.initElements(driver, this);
+    }
 
-    // Search Field
+    // Search Bar
     @FindBy(xpath = "//input[@placeholder='Search raw material...']")
     private WebElement searchField;
 
-    // List of Raw Materials
-    @FindBy(xpath = "//ul/li[contains(@class,'cursor-pointer')]")
-    private List<WebElement> rawMaterialsList;
+    // Raw Material List
+    @FindBy(xpath = "//ul/li[@class='cursor-pointer p-2 hover:bg-gray-200']")
+    private List<WebElement> rawMaterialList;
 
-    // Selected Raw Material Details
-    @FindBy(xpath = "//h2[contains(@class,'text-xl')]")
-    private WebElement selectedMaterialTitle;
+    // Raw Material Details
+    @FindBy(xpath = "//h2[contains(text(),'Details')]")
+    private WebElement materialDetailsSection;
 
-    @FindBy(xpath = "//p[strong[contains(text(),'Vendor:')]]")
-    private WebElement vendorDetails;
+    @FindBy(xpath = "//p/strong[contains(text(),'Vendor:')]")
+    private WebElement vendorName;
 
-    @FindBy(xpath = "//p[strong[contains(text(),'Quantity:')]]")
-    private WebElement quantityDetails;
+    @FindBy(xpath = "//p/strong[contains(text(),'Quantity:')]")
+    private WebElement quantity;
 
-    @FindBy(xpath = "//p[strong[contains(text(),'Expire Date:')]]")
-    private WebElement expireDateDetails;
+    @FindBy(xpath = "//p/strong[contains(text(),'Expire Date:')]")
+    private WebElement expireDate;
 
-    @FindBy(xpath = "//p[strong[contains(text(),'Price Per Unit:')]]")
-    private WebElement pricePerUnitDetails;
+    @FindBy(xpath = "//p/strong[contains(text(),'Price Per Unit:')]")
+    private WebElement pricePerUnit;
 
-    @FindBy(xpath = "//p[strong[contains(text(),'Total Cost:')]]")
-    private WebElement totalCostDetails;
+    @FindBy(xpath = "//p/strong[contains(text(),'Total Cost:')]")
+    private WebElement totalCost;
 
-    @FindBy(xpath = "//p[strong[contains(text(),'Notes:')]]")
-    private WebElement notesDetails;
-
-    @FindBy(xpath = "//p[strong[contains(text(),'Status:')]]")
-    private WebElement statusDetails;
-
-    // Ordered History
-    @FindBy(xpath = "//li[strong[contains(text(),'Ordered History:')]]/following-sibling::li")
-    private List<WebElement> orderedHistoryList;
-
-    // Reorder History
-    @FindBy(xpath = "//li[strong[contains(text(),'Reorder History:')]]/following-sibling::li")
-    private List<WebElement> reorderHistoryList;
-
-    // Refilling History
-    @FindBy(xpath = "//li[strong[contains(text(),'Refilling History:')]]/following-sibling::li")
-    private List<WebElement> refillingHistoryList;
-
-    // Status History
-    @FindBy(xpath = "//li[strong[contains(text(),'Status History:')]]/following-sibling::li")
-    private List<WebElement> statusHistoryList;
+    @FindBy(xpath = "//p/strong[contains(text(),'Status:')]")
+    private WebElement status;
 
     // Update Form Fields
     @FindBy(name = "quantity")
@@ -79,123 +64,106 @@ public class AllRawMaterialsPage extends Verification {
     @FindBy(name = "notes")
     private WebElement notesInput;
 
-    // Save Changes Button
     @FindBy(xpath = "//button[contains(text(),'Save Changes')]")
     private WebElement saveChangesButton;
 
-    // Constructor
-    public AllRawMaterialsPage(WebDriver driver) {
-        super(driver);
-        PageFactory.initElements(driver, this);
-    }
-
-    // Get All Raw Materials Heading
-    public String getAllRawMaterialsHeading() {
-        return allRawMaterialsHeading.getText();
-    }
-
-    // Enter Search Query
+    // Methods for Search
     public void enterSearchQuery(String query) {
         searchField.clear();
         searchField.sendKeys(query);
     }
 
-    // Get Raw Material Count
-    public int getRawMaterialCount() {
-        return rawMaterialsList.size();
-    }
-
-    // Select a Raw Material
     public void selectRawMaterial(int index) {
-        if (rawMaterialsList.size() > index) {
-            rawMaterialsList.get(index).click();
+        if (!rawMaterialList.isEmpty() && index < rawMaterialList.size()) {
+            rawMaterialList.get(index).click();
         }
     }
 
-    // Get Selected Material Title
-    public String getSelectedMaterialTitle() {
-        return selectedMaterialTitle.getText();
+    // Getters for Material Details
+    public String getVendorName() {
+        return vendorName.getText();
     }
 
-    // Get Raw Material Details
-    public String getVendorDetails() {
-        return vendorDetails.getText();
+    public String getQuantity() {
+        return quantity.getText();
     }
 
-    public String getQuantityDetails() {
-        return quantityDetails.getText();
+    public String getExpireDate() {
+        return expireDate.getText();
     }
 
-    public String getExpireDateDetails() {
-        return expireDateDetails.getText();
+    public String getPricePerUnit() {
+        return pricePerUnit.getText();
     }
 
-    public String getPricePerUnitDetails() {
-        return pricePerUnitDetails.getText();
+    public String getTotalCost() {
+        return totalCost.getText();
     }
 
-    public String getTotalCostDetails() {
-        return totalCostDetails.getText();
+    public String getStatus() {
+        return status.getText();
     }
 
-    public String getNotesDetails() {
-        return notesDetails.getText();
-    }
-
-    public String getStatusDetails() {
-        return statusDetails.getText();
-    }
-
-    // Get Ordered History Count
-    public int getOrderedHistoryCount() {
-        return orderedHistoryList.size();
-    }
-
-    // Get Reorder History Count
-    public int getReorderHistoryCount() {
-        return reorderHistoryList.size();
-    }
-
-    // Get Refilling History Count
-    public int getRefillingHistoryCount() {
-        return refillingHistoryList.size();
-    }
-
-    // Get Status History Count
-    public int getStatusHistoryCount() {
-        return statusHistoryList.size();
-    }
-
-    // Update Raw Material Details
-    public void updateRawMaterialDetails(String quantity, String unit, String pricePerUnit, String expireDate, String notes) {
+    // Methods for Updating Material
+    public void enterQuantity(String qty) {
         quantityInput.clear();
-        quantityInput.sendKeys(quantity);
+        quantityInput.sendKeys(qty);
+    }
 
+    public void enterUnit(String unit) {
         unitInput.clear();
         unitInput.sendKeys(unit);
+    }
 
+    public void enterPricePerUnit(String price) {
         pricePerUnitInput.clear();
-        pricePerUnitInput.sendKeys(pricePerUnit);
+        pricePerUnitInput.sendKeys(price);
+    }
 
+    public void enterExpireDate(String date) {
         expireDateInput.clear();
-        expireDateInput.sendKeys(expireDate);
+        expireDateInput.sendKeys(date);
+    }
 
+    public void enterNotes(String notes) {
         notesInput.clear();
         notesInput.sendKeys(notes);
     }
 
-    // Click Save Changes Button
-    public void clickSaveChangesButton() {
+    public void clickSaveChanges() {
         saveChangesButton.click();
     }
 
-    // Verify All Raw Materials Page Title
-    public void verifyAllRawMaterialsTitle(String expectedTitle) throws IOException {
-        verifyTitle(expectedTitle);
+    // Verification Methods using SoftAssert
+    public void verifyPageTitle(String expectedTitle, SoftAssert softAssert) {
+        verifyTitle(expectedTitle, softAssert);
     }
 
-    // Verify All Raw Materials Page URL
-    public void verifyAllRawMaterialsUrl(String expectedUrl) throws IOException {
-        verifyUrl(expectedUrl);
+    public void verifyPageUrl(String expectedUrl, SoftAssert softAssert) {
+        verifyUrl(expectedUrl, softAssert);
+    }
+
+    public void verifySearchField(SoftAssert softAssert) {
+        softAssert.assertTrue(searchField.isDisplayed(), "❌ Search field is missing.");
+    }
+
+    public void verifyRawMaterialList(SoftAssert softAssert) {
+        softAssert.assertTrue(!rawMaterialList.isEmpty(), "❌ No raw materials found.");
+    }
+
+    public void verifyMaterialDetailsSection(SoftAssert softAssert) {
+        softAssert.assertTrue(materialDetailsSection.isDisplayed(), "❌ Material details section is missing.");
+    }
+
+    public void verifyUpdateFormFields(SoftAssert softAssert) {
+        softAssert.assertTrue(quantityInput.isDisplayed(), "❌ Quantity input field is missing.");
+        softAssert.assertTrue(unitInput.isDisplayed(), "❌ Unit input field is missing.");
+        softAssert.assertTrue(pricePerUnitInput.isDisplayed(), "❌ Price per unit input field is missing.");
+        softAssert.assertTrue(expireDateInput.isDisplayed(), "❌ Expiry date input field is missing.");
+        softAssert.assertTrue(notesInput.isDisplayed(), "❌ Notes input field is missing.");
+    }
+
+    public void verifySaveChangesButton(SoftAssert softAssert) {
+        softAssert.assertTrue(saveChangesButton.isDisplayed(), "❌ Save Changes button is missing.");
     }
 }

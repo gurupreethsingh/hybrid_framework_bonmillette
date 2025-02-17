@@ -1,146 +1,156 @@
 package pom.issue_pages;
 
+import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import java.util.List;
+import org.testng.asserts.SoftAssert;
 import generic.Verification;
 
 public class SingleIssuePage extends Verification {
 
-    // **Header Elements**
-    @FindBy(xpath = "//header")
-    private WebElement header;
+    // WebDriver initialization
+    private WebDriver driver;
 
-    @FindBy(xpath = "//img[@alt='Logo']")
-    private WebElement headerLogo;
+    // ========================== HEADER ELEMENTS ==========================
 
-    @FindBy(xpath = "//nav//a[@href='/home']")
+    @FindBy(xpath = "//img[@class='w-20 h-20']")
+    private WebElement logo;
+
+    @FindBy(xpath = "//nav//a[contains(text(),'Home')]")
     private WebElement homeLink;
 
-    @FindBy(xpath = "//nav//a[@href='/shop']")
+    @FindBy(xpath = "//nav//a[contains(text(),'Shop')]")
     private WebElement shopLink;
 
-    @FindBy(xpath = "//nav//a[@href='/our-story']")
+    @FindBy(xpath = "//nav//a[contains(text(),'Our Story')]")
     private WebElement ourStoryLink;
 
-    @FindBy(xpath = "//nav//a[@href='/all-blogs']")
+    @FindBy(xpath = "//nav//a[contains(text(),'Blog')]")
     private WebElement blogLink;
 
-    @FindBy(xpath = "//nav//a[@href='/contact-us']")
+    @FindBy(xpath = "//nav//a[contains(text(),'Testimonials')]")
+    private WebElement testimonialsLink;
+
+    @FindBy(xpath = "//nav//a[contains(text(),'Contact Us')]")
     private WebElement contactUsLink;
 
-    @FindBy(xpath = "//button[contains(@class, 'text-black font-bold text-lg')]")
+    @FindBy(xpath = "//button[text()='My Account']")
     private WebElement myAccountButton;
 
-    // **Page Title**
-    @FindBy(xpath = "//h2[contains(text(),'Issue Details')]")
-    private WebElement issueDetailsTitle;
+    @FindBy(xpath = "//button[@class='text-black']//svg")
+    private WebElement searchIcon;
 
-    // **Issue Information**
-    @FindBy(xpath = "//p[strong[text()='Order ID:']]")
-    private WebElement orderIdText;
+    @FindBy(xpath = "//button[@class='text-black relative']//svg")
+    private WebElement cartIcon;
 
-    @FindBy(xpath = "//p[strong[text()='Title:']]")
-    private WebElement issueTitleText;
-
-    @FindBy(xpath = "//p[strong[text()='Description:']]")
-    private WebElement issueDescriptionText;
-
-    @FindBy(xpath = "//p[strong[text()='Customer Name:']]")
-    private WebElement customerNameText;
-
-    @FindBy(xpath = "//p[strong[text()='Complaint Raised Date:']]")
-    private WebElement complaintRaisedDateText;
-
-    @FindBy(xpath = "//p[strong[text()='Status:']]")
-    private WebElement issueStatusText;
-
-    @FindBy(xpath = "//p[strong[text()='Assigned To:']]")
-    private WebElement assignedToText;
-
-    @FindBy(xpath = "//p[strong[text()='Assigned By:']]")
-    private WebElement assignedByText;
-
-    // **Issue Images**
-    @FindBy(xpath = "//div[@class='grid grid-cols-4 gap-4']/div/img")
-    private List<WebElement> issueImages;
-
-    // **Dropdowns for Assignment & Status Update**
-    @FindBy(xpath = "//select[contains(@class, 'border rounded-md')][1]")
-    private WebElement assignEmployeeDropdown;
-
-    @FindBy(xpath = "//select[contains(@class, 'border rounded-md')][2]")
-    private WebElement changeStatusDropdown;
-
-    // **Buttons**
-    @FindBy(xpath = "//button[contains(text(),'Assign')]")
-    private WebElement assignButton;
-
-    @FindBy(xpath = "//button[contains(text(),'Update Status')]")
-    private WebElement updateStatusButton;
-
-    // **Navigation Sidebar Elements**
-    @FindBy(xpath = "//ul[contains(@class,'space-y-4')]")
-    private WebElement navigationMenu;
+    // ========================== NAVIGATION MENU ==========================
 
     @FindBy(xpath = "//a[contains(@href, 'dashboard')]")
-    private WebElement dashboardNavLink;
+    private WebElement dashboardLink;
 
     @FindBy(xpath = "//a[contains(@href, 'my-orders')]")
-    private WebElement ordersNavLink;
+    private WebElement myOrdersLink;
 
     @FindBy(xpath = "//a[contains(@href, 'addresses')]")
-    private WebElement addressesNavLink;
-
-    @FindBy(xpath = "//a[contains(@href, 'profile')]")
-    private WebElement accountDetailsNavLink;
+    private WebElement addressesLink;
 
     @FindBy(xpath = "//button[contains(text(),'Logout')]")
     private WebElement logoutButton;
 
-    // **Footer Elements**
-    @FindBy(xpath = "//footer")
-    private WebElement footer;
+    // ========================== ISSUE DETAILS ==========================
 
-    @FindBy(xpath = "//img[@alt='company logo']")
-    private WebElement footerLogo;
+    @FindBy(xpath = "//h2[contains(text(),'Issue Details')]")
+    private WebElement issueDetailsTitle;
 
-    @FindBy(xpath = "//a[contains(@href, 'instagram.com')]")
+    @FindBy(xpath = "//p[contains(text(),'Order ID')]/following-sibling::p")
+    private WebElement orderIdText;
+
+    @FindBy(xpath = "//p[contains(text(),'Title')]/following-sibling::p")
+    private WebElement issueTitleText;
+
+    @FindBy(xpath = "//p[contains(text(),'Description')]/following-sibling::p")
+    private WebElement issueDescriptionText;
+
+    @FindBy(xpath = "//p[contains(text(),'Customer Name')]/following-sibling::p")
+    private WebElement customerNameText;
+
+    @FindBy(xpath = "//p[contains(text(),'Complaint Raised Date')]/following-sibling::p")
+    private WebElement complaintDateText;
+
+    @FindBy(xpath = "//p[contains(text(),'Status')]/following-sibling::p")
+    private WebElement issueStatusText;
+
+    @FindBy(xpath = "//p[contains(text(),'Assigned To')]/following-sibling::p")
+    private WebElement assignedToText;
+
+    @FindBy(xpath = "//p[contains(text(),'Assigned By')]/following-sibling::p")
+    private WebElement assignedByText;
+
+    // ========================== ISSUE IMAGE SECTION ==========================
+
+    @FindBy(xpath = "//h3[contains(text(),'Images')]")
+    private WebElement imagesSectionTitle;
+
+    @FindBy(xpath = "//div[contains(@class, 'grid grid-cols-4 gap-4')]/div/img")
+    private List<WebElement> issueImages;
+
+    // ========================== ADMIN ACTIONS ==========================
+
+    @FindBy(xpath = "//select[contains(@class, 'border rounded-md') and contains(@class, 'Assign Employee')]")
+    private WebElement assignEmployeeDropdown;
+
+    @FindBy(xpath = "//button[contains(text(),'Assign')]")
+    private WebElement assignButton;
+
+    @FindBy(xpath = "//select[contains(@class, 'border rounded-md') and contains(@class, 'Change Status')]")
+    private WebElement changeStatusDropdown;
+
+    @FindBy(xpath = "//button[contains(text(),'Update Status')]")
+    private WebElement updateStatusButton;
+
+    // ========================== FOOTER ELEMENTS ==========================
+
+    @FindBy(xpath = "//div[contains(@class, 'social_links')]//a[contains(@href, 'instagram')]")
     private WebElement instagramLink;
 
-    @FindBy(xpath = "//a[contains(@href, 'linkedin.com')]")
+    @FindBy(xpath = "//div[contains(@class, 'social_links')]//a[contains(@href, 'linkedin')]")
     private WebElement linkedinLink;
 
-    @FindBy(xpath = "//a[contains(@href, 'facebook.com')]")
+    @FindBy(xpath = "//div[contains(@class, 'social_links')]//a[contains(@href, 'facebook')]")
     private WebElement facebookLink;
 
-    @FindBy(xpath = "//a[contains(@href, 'twitter.com')]")
+    @FindBy(xpath = "//div[contains(@class, 'social_links')]//a[contains(@href, 'twitter')]")
     private WebElement twitterLink;
 
-    @FindBy(xpath = "//a[@href='/privacy-policy']")
+    @FindBy(xpath = "//p[contains(text(),'Phone:')]")
+    private WebElement contactPhoneText;
+
+    @FindBy(xpath = "//p[contains(text(),'Bon Millette')]")
+    private WebElement companyAddressText;
+
+    @FindBy(xpath = "//a[contains(@href, 'privacy-policy')]")
     private WebElement privacyPolicyLink;
 
-    @FindBy(xpath = "//a[@href='/terms-and-conditions']")
+    @FindBy(xpath = "//a[contains(@href, 'terms-and-conditions')]")
     private WebElement termsAndConditionsLink;
 
-    @FindBy(xpath = "//a[@href='/return-policy']")
+    @FindBy(xpath = "//a[contains(@href, 'return-policy')]")
     private WebElement returnPolicyLink;
 
-    // **Constructor for Initialization**
+    // ========================== CONSTRUCTOR ==========================
+
     public SingleIssuePage(WebDriver driver) {
         super(driver);
+        this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    // **Header Methods**
-    public boolean isHeaderDisplayed() {
-        return header.isDisplayed();
-    }
+    // ========================== ACTION METHODS ==========================
 
-    public void clickOnLogo() {
-        headerLogo.click();
+    public void clickLogo() {
+        logo.click();
     }
 
     public void clickHomeLink() {
@@ -159,120 +169,79 @@ public class SingleIssuePage extends Verification {
         blogLink.click();
     }
 
+    public void clickTestimonialsLink() {
+        testimonialsLink.click();
+    }
+
     public void clickContactUsLink() {
         contactUsLink.click();
     }
 
-    public void clickMyAccountButton() {
+    public void clickMyAccount() {
         myAccountButton.click();
     }
 
-    // **Issue Details Verification Methods**
-    public boolean verifyIssueDetailsTitle() {
-        return issueDetailsTitle.isDisplayed();
+    public void clickSearchIcon() {
+        searchIcon.click();
     }
 
-    public String getIssueTitle() {
-        return issueTitleText.getText();
+    public void clickCartIcon() {
+        cartIcon.click();
     }
 
-    public String getIssueDescription() {
-        return issueDescriptionText.getText();
+    public void clickDashboardLink() {
+        dashboardLink.click();
     }
 
-    public String getCustomerName() {
-        return customerNameText.getText();
+    public void clickMyOrdersLink() {
+        myOrdersLink.click();
     }
 
-    public String getComplaintRaisedDate() {
-        return complaintRaisedDateText.getText();
+    public void clickAddressesLink() {
+        addressesLink.click();
     }
 
-    public String getIssueStatus() {
-        return issueStatusText.getText();
+    public void clickLogout() {
+        logoutButton.click();
     }
 
-    public String getAssignedTo() {
-        return assignedToText.getText();
+    public void selectEmployeeToAssign(String employeeName) {
+        selectDropdownValue(assignEmployeeDropdown, employeeName);
     }
 
-    public String getAssignedBy() {
-        return assignedByText.getText();
-    }
-
-    public int getIssueImagesCount() {
-        return issueImages.size();
-    }
-
-    // **Dropdown Interactions**
-    public void selectEmployeeForAssignment(String employeeName) {
-        selectDropdownOptionByVisibleText(assignEmployeeDropdown, employeeName);
+    public void clickAssignButton() {
+        assignButton.click();
     }
 
     public void selectIssueStatus(String status) {
-        selectDropdownOptionByVisibleText(changeStatusDropdown, status);
-    }
-
-    // **Button Click Actions**
-    public void clickAssignButton() {
-        assignButton.click();
+        selectDropdownValue(changeStatusDropdown, status);
     }
 
     public void clickUpdateStatusButton() {
         updateStatusButton.click();
     }
 
-    // **Navigation Sidebar Methods**
-    public void clickDashboardNavLink() {
-        dashboardNavLink.click();
-    }
-
-    public void clickOrdersNavLink() {
-        ordersNavLink.click();
-    }
-
-    public void clickAddressesNavLink() {
-        addressesNavLink.click();
-    }
-
-    public void clickAccountDetailsNavLink() {
-        accountDetailsNavLink.click();
-    }
-
-    public void clickLogoutButton() {
-        logoutButton.click();
-    }
-
-    // **Footer Methods**
-    public boolean isFooterDisplayed() {
-        return footer.isDisplayed();
-    }
-
     public void clickInstagramLink() {
         instagramLink.click();
-    }
-
-    public void clickFacebookLink() {
-        facebookLink.click();
     }
 
     public void clickLinkedInLink() {
         linkedinLink.click();
     }
 
+    public void clickFacebookLink() {
+        facebookLink.click();
+    }
+
     public void clickTwitterLink() {
         twitterLink.click();
     }
 
-    public void clickPrivacyPolicyLink() {
-        privacyPolicyLink.click();
+    public boolean verifyPageTitle(String expectedTitle, SoftAssert softAssert) {
+        return verifyTitle(expectedTitle, softAssert);
     }
 
-    public void clickTermsAndConditionsLink() {
-        termsAndConditionsLink.click();
-    }
-
-    public void clickReturnPolicyLink() {
-        returnPolicyLink.click();
+    public boolean verifyPageURL(String expectedURL, SoftAssert softAssert) {
+        return verifyUrl(expectedURL, softAssert);
     }
 }

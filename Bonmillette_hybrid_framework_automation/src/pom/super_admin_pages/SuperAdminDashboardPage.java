@@ -1,111 +1,190 @@
 package pom.super_admin_pages;
 
-import java.io.IOException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.*;
+import org.testng.asserts.SoftAssert;
 import generic.Verification;
+import java.time.Duration;
+import java.util.List;
 
 public class SuperAdminDashboardPage extends Verification {
+    WebDriverWait wait;
 
-    @FindBy(xpath = "//p[contains(text(),'Super Admin')]")
-    private WebElement superAdminHeading;
-
-    @FindBy(xpath = "//input[@placeholder='Search cards...']")
-    private WebElement searchInput;
-
-    @FindBy(xpath = "//a[contains(@href,'all-users')]")
-    private WebElement totalUsersCard;
-
-    @FindBy(xpath = "//a[contains(@href,'all-customers')]")
-    private WebElement customersCard;
-
-    @FindBy(xpath = "//a[contains(@href,'all-employees')]")
-    private WebElement employeesCard;
-
-    @FindBy(xpath = "//a[contains(@href,'all-orders')]")
-    private WebElement totalOrdersCard;
-
-    @FindBy(xpath = "//a[contains(@href,'all-issues')]")
-    private WebElement unresolvedIssuesCard;
-
-    @FindBy(xpath = "//i[contains(@class, 'fi-home')]")
-    private WebElement dashboardNavLink;
-
-    @FindBy(xpath = "//i[contains(@class, 'fi-box')]")
-    private WebElement ordersNavLink;
-
-    @FindBy(xpath = "//i[contains(@class, 'fi-map-pin')]")
-    private WebElement addressesNavLink;
-
-    @FindBy(xpath = "//i[contains(@class, 'fi-user')]")
-    private WebElement accountDetailsNavLink;
-
-    @FindBy(xpath = "//i[contains(@class, 'fi-log-out')]")
-    private WebElement logoutNavLink;
-
-    // Constructor to initialize elements
+    // Constructor
     public SuperAdminDashboardPage(WebDriver driver) {
         super(driver);
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         PageFactory.initElements(driver, this);
     }
 
-    // Methods to interact with elements
-    public String getSuperAdminHeading() {
-        return superAdminHeading.getText();
+    // **🔹 Header Elements**
+    @FindBy(xpath = "//header")
+    private WebElement header;
+
+    @FindBy(xpath = "//header//nav//a[contains(text(),'Home')]")
+    private WebElement homeLink;
+
+    @FindBy(xpath = "//header//nav//a[contains(text(),'Shop')]")
+    private WebElement shopLink;
+
+    @FindBy(xpath = "//header//nav//a[contains(text(),'My Account')]")
+    private WebElement myAccountLink;
+
+    @FindBy(xpath = "//header//nav//a[contains(text(),'Contact Us')]")
+    private WebElement contactUsLink;
+
+    @FindBy(xpath = "//header//input[@placeholder='Search for blogs...']")
+    private WebElement searchField;
+
+    @FindBy(xpath = "//header//button[contains(@class, 'search')]")
+    private WebElement searchButton;
+
+    // **🔹 Sidebar Navigation Elements**
+    @FindBy(xpath = "//aside//a[contains(text(),'Dashboard')]")
+    private WebElement dashboardLink;
+
+    @FindBy(xpath = "//aside//a[contains(text(),'Orders')]")
+    private WebElement ordersLink;
+
+    @FindBy(xpath = "//aside//a[contains(text(),'Addresses')]")
+    private WebElement addressesLink;
+
+    @FindBy(xpath = "//aside//a[contains(text(),'Account Details')]")
+    private WebElement accountDetailsLink;
+
+    @FindBy(xpath = "//aside//button[contains(text(),'Logout')]")
+    private WebElement logoutButton;
+
+    // **🔹 Search Box**
+    @FindBy(xpath = "//input[@placeholder='Search cards...']")
+    private WebElement cardSearchField;
+
+    @FindBy(xpath = "//span[@class='absolute top-1/2 right-3']")
+    private WebElement searchIcon;
+
+    // **🔹 Dashboard Cards**
+    @FindBy(xpath = "//div[contains(@class, 'grid-cols-3') or contains(@class, 'grid-cols-2')]/a")
+    private List<WebElement> dashboardCards;
+
+    @FindBy(xpath = "//div[contains(@class, 'grid-cols-3') or contains(@class, 'grid-cols-2')]/a//h5")
+    private List<WebElement> cardTitles;
+
+    @FindBy(xpath = "//div[contains(@class, 'grid-cols-3') or contains(@class, 'grid-cols-2')]/a//p")
+    private List<WebElement> cardValues;
+
+    // **🔹 Footer Elements**
+    @FindBy(xpath = "//footer")
+    private WebElement footer;
+
+    @FindBy(xpath = "//footer//a[contains(text(),'Privacy Policy')]")
+    private WebElement privacyPolicyLink;
+
+    @FindBy(xpath = "//footer//a[contains(text(),'Terms & Conditions')]")
+    private WebElement termsConditionsLink;
+
+    @FindBy(xpath = "//footer//a[contains(text(),'Return Policy')]")
+    private WebElement returnPolicyLink;
+
+    // **🔹 Verification Methods**
+
+    /**
+     * Verifies the Superadmin Dashboard page title.
+     */
+    public void verifyPageTitle(SoftAssert softAssert) {
+        verifyTitle("Super Admin", softAssert);
     }
 
-    public void enterSearchQuery(String query) {
-        searchInput.clear();
-        searchInput.sendKeys(query);
+    /**
+     * Verifies that header and footer are present.
+     */
+    public void verifyHeaderAndFooter(SoftAssert softAssert) {
+        softAssert.assertTrue(header.isDisplayed(), "❌ Header is not displayed.");
+        softAssert.assertTrue(footer.isDisplayed(), "❌ Footer is not displayed.");
     }
 
-    public void clickTotalUsersCard() {
-        totalUsersCard.click();
+    /**
+     * Verifies that navigation links in the header are displayed.
+     */
+    public void verifyHeaderNavigation(SoftAssert softAssert) {
+        softAssert.assertTrue(homeLink.isDisplayed(), "❌ Home link not found.");
+        softAssert.assertTrue(shopLink.isDisplayed(), "❌ Shop link not found.");
+        softAssert.assertTrue(myAccountLink.isDisplayed(), "❌ My Account link not found.");
+        softAssert.assertTrue(contactUsLink.isDisplayed(), "❌ Contact Us link not found.");
     }
 
-    public void clickCustomersCard() {
-        customersCard.click();
+    /**
+     * Verifies that sidebar navigation is displayed.
+     */
+    public void verifySidebarNavigation(SoftAssert softAssert) {
+        softAssert.assertTrue(dashboardLink.isDisplayed(), "❌ Dashboard link not found.");
+        softAssert.assertTrue(ordersLink.isDisplayed(), "❌ Orders link not found.");
+        softAssert.assertTrue(addressesLink.isDisplayed(), "❌ Addresses link not found.");
+        softAssert.assertTrue(accountDetailsLink.isDisplayed(), "❌ Account Details link not found.");
     }
 
-    public void clickEmployeesCard() {
-        employeesCard.click();
+    /**
+     * Verifies that dashboard cards are loaded.
+     */
+    public boolean isDashboardCardsNotEmpty() {
+        return !dashboardCards.isEmpty();
     }
 
-    public void clickTotalOrdersCard() {
-        totalOrdersCard.click();
+    /**
+     * Verifies that footer links are displayed.
+     */
+    public void verifyFooterNavigation(SoftAssert softAssert) {
+        softAssert.assertTrue(privacyPolicyLink.isDisplayed(), "❌ Privacy Policy link not found.");
+        softAssert.assertTrue(termsConditionsLink.isDisplayed(), "❌ Terms & Conditions link not found.");
+        softAssert.assertTrue(returnPolicyLink.isDisplayed(), "❌ Return Policy link not found.");
     }
 
-    public void clickUnresolvedIssuesCard() {
-        unresolvedIssuesCard.click();
+    // **🔹 Actions**
+
+    /**
+     * Searches for a dashboard card.
+     */
+    public void searchDashboardCard(String keyword) {
+        cardSearchField.clear();
+        cardSearchField.sendKeys(keyword);
+        searchIcon.click();
     }
 
-    public void clickDashboardNav() {
-        dashboardNavLink.click();
+    /**
+     * Clicks a specific card based on title.
+     */
+    public void clickCard(String cardTitle) {
+        for (WebElement card : dashboardCards) {
+            if (card.getText().contains(cardTitle)) {
+                card.click();
+                break;
+            }
+        }
     }
 
-    public void clickOrdersNav() {
-        ordersNavLink.click();
-    }
-
-    public void clickAddressesNav() {
-        addressesNavLink.click();
-    }
-
-    public void clickAccountDetailsNav() {
-        accountDetailsNavLink.click();
-    }
-
-    public void clickLogoutNav() {
-        logoutNavLink.click();
-    }
-
-    public void verifySuperAdminDashboardTitle(String expectedTitle) throws IOException {
-        verifyTitle(expectedTitle);
-    }
-
-    public void verifySuperAdminDashboardUrl(String expectedUrl) throws IOException {
-        verifyUrl(expectedUrl);
+    /**
+     * Clicks on a sidebar navigation link.
+     */
+    public void navigateToSidebarOption(String option) {
+        switch (option.toLowerCase()) {
+            case "dashboard":
+                dashboardLink.click();
+                break;
+            case "orders":
+                ordersLink.click();
+                break;
+            case "addresses":
+                addressesLink.click();
+                break;
+            case "account details":
+                accountDetailsLink.click();
+                break;
+            case "logout":
+                logoutButton.click();
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid sidebar option: " + option);
+        }
     }
 }

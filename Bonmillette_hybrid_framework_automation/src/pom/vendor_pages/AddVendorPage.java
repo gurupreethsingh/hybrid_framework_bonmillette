@@ -1,32 +1,31 @@
 package pom.vendor_pages;
 
-import java.io.IOException;
-
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.asserts.SoftAssert;
 import generic.Verification;
 
 public class AddVendorPage extends Verification {
 
-    // Page Heading
-    @FindBy(xpath = "//h2[contains(text(),'Add New Vendor')]")
-    private WebElement addVendorHeading;
+    // Constructor
+    public AddVendorPage(WebDriver driver) {
+        super(driver);
+        PageFactory.initElements(driver, this);
+    }
 
-    // Vendor Name
+    // Page Elements (Form Fields)
     @FindBy(name = "vendor_name")
     private WebElement vendorNameInput;
 
-    // Email
     @FindBy(name = "vendor_email")
     private WebElement vendorEmailInput;
 
-    // Phone
     @FindBy(name = "vendor_phone")
     private WebElement vendorPhoneInput;
 
-    // Address Fields
     @FindBy(name = "street")
     private WebElement streetInput;
 
@@ -42,15 +41,12 @@ public class AddVendorPage extends Verification {
     @FindBy(name = "country")
     private WebElement countryInput;
 
-    // Company Name
     @FindBy(name = "company_name")
     private WebElement companyNameInput;
 
-    // Company Registration Number
     @FindBy(name = "company_registration_number")
     private WebElement registrationNumberInput;
 
-    // Bank Details
     @FindBy(name = "bank_name")
     private WebElement bankNameInput;
 
@@ -60,120 +56,143 @@ public class AddVendorPage extends Verification {
     @FindBy(name = "ifsc_code")
     private WebElement ifscCodeInput;
 
-    // Submit Button
+    @FindBy(xpath = "//select[@name='status']")
+    private WebElement statusDropdown;
+
     @FindBy(xpath = "//button[contains(text(),'Add Vendor')]")
     private WebElement addVendorButton;
 
-    // View All Vendors Button
-    @FindBy(xpath = "//button[contains(text(),'View All Vendors')]")
-    private WebElement viewAllVendorsButton;
+    @FindBy(xpath = "//a[contains(@href, 'all-vendors')]")
+    private WebElement viewAllVendorsLink;
 
-    // Constructor
-    public AddVendorPage(WebDriver driver) {
-        super(driver);
-        PageFactory.initElements(driver, this);
-    }
-
-    // Get Add Vendor Page Heading
-    public String getAddVendorHeading() {
-        return addVendorHeading.getText();
-    }
-
-    // Enter Vendor Name
-    public void enterVendorName(String vendorName) {
+    // Methods to interact with form fields
+    public void enterVendorName(String name) {
         vendorNameInput.clear();
-        vendorNameInput.sendKeys(vendorName);
+        vendorNameInput.sendKeys(name);
     }
 
-    // Enter Vendor Email
     public void enterVendorEmail(String email) {
         vendorEmailInput.clear();
         vendorEmailInput.sendKeys(email);
     }
 
-    // Enter Vendor Phone
     public void enterVendorPhone(String phone) {
         vendorPhoneInput.clear();
         vendorPhoneInput.sendKeys(phone);
     }
 
-    // Enter Street Address
     public void enterStreet(String street) {
         streetInput.clear();
         streetInput.sendKeys(street);
     }
 
-    // Enter City
     public void enterCity(String city) {
         cityInput.clear();
         cityInput.sendKeys(city);
     }
 
-    // Enter State
     public void enterState(String state) {
         stateInput.clear();
         stateInput.sendKeys(state);
     }
 
-    // Enter Zip Code
-    public void enterZipCode(String zipCode) {
+    public void enterZipCode(String zip) {
         zipCodeInput.clear();
-        zipCodeInput.sendKeys(zipCode);
+        zipCodeInput.sendKeys(zip);
     }
 
-    // Enter Country
     public void enterCountry(String country) {
         countryInput.clear();
         countryInput.sendKeys(country);
     }
 
-    // Enter Company Name
     public void enterCompanyName(String companyName) {
         companyNameInput.clear();
         companyNameInput.sendKeys(companyName);
     }
 
-    // Enter Company Registration Number
-    public void enterRegistrationNumber(String registrationNumber) {
+    public void enterRegistrationNumber(String regNumber) {
         registrationNumberInput.clear();
-        registrationNumberInput.sendKeys(registrationNumber);
+        registrationNumberInput.sendKeys(regNumber);
     }
 
-    // Enter Bank Name
     public void enterBankName(String bankName) {
         bankNameInput.clear();
         bankNameInput.sendKeys(bankName);
     }
 
-    // Enter Account Number
     public void enterAccountNumber(String accountNumber) {
         accountNumberInput.clear();
         accountNumberInput.sendKeys(accountNumber);
     }
 
-    // Enter IFSC Code
-    public void enterIfscCode(String ifscCode) {
+    public void enterIFSCCode(String ifscCode) {
         ifscCodeInput.clear();
         ifscCodeInput.sendKeys(ifscCode);
     }
 
-    // Click Add Vendor Button
-    public void clickAddVendorButton() {
+    public void selectStatus(String status) {
+        Select select = new Select(statusDropdown);
+        select.selectByVisibleText(status);
+    }
+
+    public void clickAddVendor() {
         addVendorButton.click();
     }
 
-    // Click View All Vendors Button
-    public void clickViewAllVendorsButton() {
-        viewAllVendorsButton.click();
+    public void clickViewAllVendors() {
+        viewAllVendorsLink.click();
     }
 
-    // Verify Add Vendor Page Title
-    public void verifyAddVendorTitle(String expectedTitle) throws IOException {
-        verifyTitle(expectedTitle);
+    // Verification Methods using SoftAssert
+    public void verifyPageTitle(String expectedTitle, SoftAssert softAssert) {
+        verifyTitle(expectedTitle, softAssert);
     }
 
-    // Verify Add Vendor Page URL
-    public void verifyAddVendorUrl(String expectedUrl) throws IOException {
-        verifyUrl(expectedUrl);
+    public void verifyPageUrl(String expectedUrl, SoftAssert softAssert) {
+        verifyUrl(expectedUrl, softAssert);
+    }
+
+    public void verifyVendorNameField(SoftAssert softAssert) {
+        softAssert.assertTrue(vendorNameInput.isDisplayed(), "❌ Vendor Name input is missing.");
+    }
+
+    public void verifyVendorEmailField(SoftAssert softAssert) {
+        softAssert.assertTrue(vendorEmailInput.isDisplayed(), "❌ Vendor Email input is missing.");
+    }
+
+    public void verifyVendorPhoneField(SoftAssert softAssert) {
+        softAssert.assertTrue(vendorPhoneInput.isDisplayed(), "❌ Vendor Phone input is missing.");
+    }
+
+    public void verifyAddressFields(SoftAssert softAssert) {
+        softAssert.assertTrue(streetInput.isDisplayed(), "❌ Street input is missing.");
+        softAssert.assertTrue(cityInput.isDisplayed(), "❌ City input is missing.");
+        softAssert.assertTrue(stateInput.isDisplayed(), "❌ State input is missing.");
+        softAssert.assertTrue(zipCodeInput.isDisplayed(), "❌ Zip Code input is missing.");
+        softAssert.assertTrue(countryInput.isDisplayed(), "❌ Country input is missing.");
+    }
+
+    public void verifyCompanyDetails(SoftAssert softAssert) {
+        softAssert.assertTrue(companyNameInput.isDisplayed(), "❌ Company Name input is missing.");
+        softAssert.assertTrue(registrationNumberInput.isDisplayed(), "❌ Registration Number input is missing.");
+    }
+
+    public void verifyBankDetails(SoftAssert softAssert) {
+        softAssert.assertTrue(bankNameInput.isDisplayed(), "❌ Bank Name input is missing.");
+        softAssert.assertTrue(accountNumberInput.isDisplayed(), "❌ Account Number input is missing.");
+        softAssert.assertTrue(ifscCodeInput.isDisplayed(), "❌ IFSC Code input is missing.");
+    }
+
+    public void verifyStatusDropdown(SoftAssert softAssert) {
+        softAssert.assertTrue(statusDropdown.isDisplayed(), "❌ Status dropdown is missing.");
+    }
+
+    public void verifyAddVendorButton(SoftAssert softAssert) {
+        softAssert.assertTrue(addVendorButton.isDisplayed(), "❌ Add Vendor button is missing.");
+    }
+
+    public void verifyViewAllVendorsLink(SoftAssert softAssert) {
+        softAssert.assertTrue(viewAllVendorsLink.isDisplayed(), "❌ View All Vendors link is missing.");
     }
 }
