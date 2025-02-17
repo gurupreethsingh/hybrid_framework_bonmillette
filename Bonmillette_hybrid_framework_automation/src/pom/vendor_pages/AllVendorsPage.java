@@ -101,13 +101,6 @@ public class AllVendorsPage extends Verification {
         }
     }
 
-    // Delete a Vendor
-    public void deleteVendor(int index) {
-        if (deleteVendorButtons.size() > index) {
-            deleteVendorButtons.get(index).click();
-            acceptAlert(); // Handle confirmation alert
-        }
-    }
 
     // Verify All Vendors Page Title
     public void verifyAllVendorsTitle(String expectedTitle) throws IOException {

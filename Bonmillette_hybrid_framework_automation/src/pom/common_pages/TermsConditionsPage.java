@@ -1,5 +1,6 @@
-package pom.admin_pages;
+package pom.common_pages;
 
+import java.io.IOException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,34 +9,37 @@ import org.testng.asserts.SoftAssert;
 
 import generic.Verification;
 
-public class AdminDashboardPage extends Verification {
+public class TermsConditionsPage extends Verification {
     
-    @FindBy(xpath="//h2[contains(text(),'Hello')]")
-    private WebElement dashboardGreeting;
+    @FindBy(xpath="//h1[contains(text(),'Terms and Conditions')]")
+    private WebElement termsConditionsTitle;
     
-    @FindBy(xpath="//h3[contains(text(),'Navigation')]")
-    private WebElement navigationTitle;
+    @FindBy(xpath="//p[contains(text(),'Welcome to our e-commerce store')]")
+    private WebElement termsConditionsDescription;
     
-    @FindBy(xpath="//a[contains(@href, '/superadmin-dashboard')]")
-    private WebElement superAdminDashboardLink;
+    @FindBy(xpath="//h2[contains(text(),'Use of Website')]")
+    private WebElement useOfWebsiteTitle;
     
-    @FindBy(xpath="//a[contains(@href, '/my-orders')]")
-    private WebElement manageOrdersLink;
+    @FindBy(xpath="//p[contains(text(),'You agree to use this website for lawful purposes')]")
+    private WebElement useOfWebsiteDescription;
     
-    @FindBy(xpath="//a[contains(@href, '/all-users')]")
-    private WebElement manageUsersLink;
+    @FindBy(xpath="//h2[contains(text(),'Order Acceptance')]")
+    private WebElement orderAcceptanceTitle;
     
-    @FindBy(xpath="//a[contains(@href, '/profile')]")
-    private WebElement accountDetailsLink;
+    @FindBy(xpath="//p[contains(text(),'We reserve the right to accept or reject your order')]")
+    private WebElement orderAcceptanceDescription;
     
-    @FindBy(xpath="//button[contains(text(),'Logout')]")
-    private WebElement logoutButton;
+    @FindBy(xpath="//h2[contains(text(),'Limitation of Liability')]")
+    private WebElement limitationOfLiabilityTitle;
     
-    @FindBy(xpath="//a[contains(@href, '/all-orders')]")
-    private WebElement allOrdersLink;
+    @FindBy(xpath="//p[contains(text(),'We are not liable for any indirect or consequential losses')]")
+    private WebElement limitationOfLiabilityDescription;
     
-    @FindBy(xpath="//a[contains(@href, '/all-categories')]")
-    private WebElement allCategoriesLink;
+    @FindBy(xpath="//h2[contains(text(),'Changes to Terms')]")
+    private WebElement changesToTermsTitle;
+    
+    @FindBy(xpath="//p[contains(text(),'We may update these terms at any time')]")
+    private WebElement changesToTermsDescription;
     
     // Header and Footer elements
     @FindBy(xpath="//img[@alt='Logo']")
@@ -93,21 +97,17 @@ public class AdminDashboardPage extends Verification {
     private WebElement returnPolicyLink;
     
     // Constructor for initialization
-    public AdminDashboardPage(WebDriver driver) {
+    public TermsConditionsPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
     
     // Utilization methods to interact with elements
-    public void clickLogoutButton() {
-        logoutButton.click();
-    }
-    
-    public boolean verifyAdminDashboardTitle(String expectedTitle, SoftAssert softAssert) {
+    public boolean verifyTermsConditionsTitle(String expectedTitle, SoftAssert softAssert) {
         return verifyTitle(expectedTitle, softAssert);
     }
     
-    public boolean verifyAdminDashboardUrl(String expectedUrl, SoftAssert softAssert) {
+    public boolean verifyTermsConditionsUrl(String expectedUrl, SoftAssert softAssert) {
         return verifyUrl(expectedUrl, softAssert);
     }
     

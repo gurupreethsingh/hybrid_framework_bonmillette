@@ -68,10 +68,6 @@ public class ChangeRolesPage extends Verification {
         searchInput.sendKeys(query);
     }
 
-    public void selectRole(String role) {
-        selectByVisibleText(roleDropdown, role);
-    }
-
     public void clickUpdateRoleButton() {
         updateRoleButton.click();
     }

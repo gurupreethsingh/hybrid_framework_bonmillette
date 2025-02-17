@@ -1,5 +1,6 @@
-package pom.category_pages;
+package pom.contact_pages;
 
+import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -7,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.asserts.SoftAssert;
 import generic.Verification;
 
-public class SingleCategoryPage extends Verification {
+public class AllRepliesPage extends Verification {
 
     // **Header Elements**
     @FindBy(xpath = "//header")
@@ -40,30 +41,33 @@ public class SingleCategoryPage extends Verification {
     @FindBy(xpath = "(//*[name()='svg'])[2]")
     private WebElement cartIcon;
 
-    // **Category Details Elements**
-    @FindBy(xpath = "//h2[contains(@class, 'text-3xl font-bold')]")
-    private WebElement categoryTitle;
+    // **Replies Page Elements**
+    @FindBy(xpath = "//h2[contains(text(),'All Replies')]")
+    private WebElement repliesTitle;
 
-    @FindBy(xpath = "//a[@href='/all-categories']")
-    private WebElement allCategoriesLink;
+    @FindBy(xpath = "//input[@placeholder='Search...']")
+    private WebElement searchField;
 
-    @FindBy(xpath = "//h3[contains(@class, 'text-lg font-semibold')]")
-    private WebElement categoryDetailsTitle;
+    @FindBy(xpath = "//button[contains(@class,'text-green-500') and contains(text(),'List View')]")
+    private WebElement listViewButton;
 
-    @FindBy(xpath = "//dt[contains(text(),'Category Name')]")
-    private WebElement categoryNameLabel;
+    @FindBy(xpath = "//button[contains(@class,'text-green-500') and contains(text(),'Grid View')]")
+    private WebElement gridViewButton;
 
-    @FindBy(xpath = "//input[contains(@class, 'border px-2 py-1 rounded')]")
-    private WebElement categoryNameInput;
+    @FindBy(xpath = "//button[contains(@class,'text-green-500') and contains(text(),'Card View')]")
+    private WebElement cardViewButton;
 
-    @FindBy(xpath = "//button[contains(@class, 'bg-blue-500 text-white')]")
-    private WebElement editSaveButton;
+    @FindBy(xpath = "//div[contains(@class, 'grid')]/div")
+    private List<WebElement> repliesList;
 
-    @FindBy(xpath = "//dt[contains(text(),'Created At')]")
-    private WebElement createdAtLabel;
+    @FindBy(xpath = "//button[contains(@class,'bg-indigo-600')]/span[text()='Previous']")
+    private WebElement previousPageButton;
 
-    @FindBy(xpath = "//dd[contains(@class, 'text-gray-700')]")
-    private WebElement createdAtValue;
+    @FindBy(xpath = "//button[contains(@class,'bg-indigo-600')]/span[text()='Next']")
+    private WebElement nextPageButton;
+
+    @FindBy(xpath = "//span[contains(text(),'Page')]")
+    private WebElement pageNumberText;
 
     // **Footer Elements**
     @FindBy(xpath = "//footer")
@@ -94,7 +98,7 @@ public class SingleCategoryPage extends Verification {
     private WebElement returnPolicyLink;
 
     // **Constructor for Initialization**
-    public SingleCategoryPage(WebDriver driver) {
+    public AllRepliesPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
@@ -140,38 +144,50 @@ public class SingleCategoryPage extends Verification {
         cartIcon.click();
     }
 
-    // **Category Page Methods**
-    public String getCategoryTitle() {
-        return categoryTitle.getText();
+    // **Replies Page Methods**
+    public String getRepliesTitle() {
+        return repliesTitle.getText();
     }
 
-    public boolean verifyCategoryTitle(SoftAssert softAssert, String expectedTitle) {
-        return verifyTextPresent(categoryTitle.getText(), softAssert);
+    public boolean verifyRepliesTitle(SoftAssert softAssert, String expectedTitle) {
+        return verifyTextPresent(repliesTitle.getText(), softAssert);
     }
 
-    public void clickAllCategoriesLink() {
-        allCategoriesLink.click();
+    public void enterSearchText(String searchText) {
+        searchField.clear();
+        searchField.sendKeys(searchText);
     }
 
-    public String getCategoryDetailsTitle() {
-        return categoryDetailsTitle.getText();
+    public void clickListViewButton() {
+        listViewButton.click();
     }
 
-    public boolean isCategoryNameDisplayed() {
-        return categoryNameLabel.isDisplayed();
+    public void clickGridViewButton() {
+        gridViewButton.click();
     }
 
-    public void enterCategoryName(String categoryName) {
-        categoryNameInput.clear();
-        categoryNameInput.sendKeys(categoryName);
+    public void clickCardViewButton() {
+        cardViewButton.click();
     }
 
-    public void clickEditSaveButton() {
-        editSaveButton.click();
+    public int getRepliesCount() {
+        return repliesList.size();
     }
 
-    public String getCreatedAtDate() {
-        return createdAtValue.getText();
+    public void clickReply(int index) {
+        repliesList.get(index).click();
+    }
+
+    public void clickPreviousPage() {
+        previousPageButton.click();
+    }
+
+    public void clickNextPage() {
+        nextPageButton.click();
+    }
+
+    public String getCurrentPageNumber() {
+        return pageNumberText.getText();
     }
 
     // **Footer Methods**
@@ -207,4 +223,3 @@ public class SingleCategoryPage extends Verification {
         returnPolicyLink.click();
     }
 }
-

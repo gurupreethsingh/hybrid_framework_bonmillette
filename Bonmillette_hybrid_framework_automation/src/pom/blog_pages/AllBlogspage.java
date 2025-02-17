@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.asserts.SoftAssert;
+
 import generic.Verification;
 
 public class AllBlogspage extends Verification
@@ -106,13 +108,13 @@ public class AllBlogspage extends Verification
 		cartIcon.click();
 	}
 	
-	public void verifyAllBlogspageTitle(String expectedTitle) throws IOException{
-		verifyTitle(expectedTitle);   // Verification class function.
-	}
-	
-	public void verifyAllBlogspageUrl(String expectedUrl) throws IOException
-	{
-		verifyUrl(expectedUrl);
-	}
+    // ✅ Soft Assertion-based verification methods
+    public boolean verifyAllBlogspageTitle(String expectedTitle, SoftAssert softAssert) {
+        return verifyTitle(expectedTitle, softAssert);
+    }
+
+    public boolean verifyAllBlogspageUrl(String expectedUrl, SoftAssert softAssert) {
+        return verifyUrl(expectedUrl, softAssert);
+    }
 }
 

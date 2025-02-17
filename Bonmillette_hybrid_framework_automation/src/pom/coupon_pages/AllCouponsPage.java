@@ -1,5 +1,6 @@
-package pom.category_pages;
+package pom.coupon_pages;
 
+import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -7,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.asserts.SoftAssert;
 import generic.Verification;
 
-public class SingleCategoryPage extends Verification {
+public class AllCouponsPage extends Verification {
 
     // **Header Elements**
     @FindBy(xpath = "//header")
@@ -40,30 +41,27 @@ public class SingleCategoryPage extends Verification {
     @FindBy(xpath = "(//*[name()='svg'])[2]")
     private WebElement cartIcon;
 
-    // **Category Details Elements**
-    @FindBy(xpath = "//h2[contains(@class, 'text-3xl font-bold')]")
-    private WebElement categoryTitle;
+    // **All Coupons Page Elements**
+    @FindBy(xpath = "//h2[contains(text(),'All Coupons')]")
+    private WebElement allCouponsTitle;
 
-    @FindBy(xpath = "//a[@href='/all-categories']")
-    private WebElement allCategoriesLink;
+    @FindBy(xpath = "//input[@placeholder='Search coupons...']")
+    private WebElement searchField;
 
-    @FindBy(xpath = "//h3[contains(@class, 'text-lg font-semibold')]")
-    private WebElement categoryDetailsTitle;
+    @FindBy(xpath = "//div[contains(@class,'grid')]/div")
+    private List<WebElement> couponList;
 
-    @FindBy(xpath = "//dt[contains(text(),'Category Name')]")
-    private WebElement categoryNameLabel;
+    @FindBy(xpath = "//button[contains(@class,'text-red-500')]")
+    private List<WebElement> deleteCouponButtons;
 
-    @FindBy(xpath = "//input[contains(@class, 'border px-2 py-1 rounded')]")
-    private WebElement categoryNameInput;
+    @FindBy(xpath = "//a[contains(@href, '/create-coupon')]")
+    private WebElement createCouponLink;
 
-    @FindBy(xpath = "//button[contains(@class, 'bg-blue-500 text-white')]")
-    private WebElement editSaveButton;
+    @FindBy(xpath = "//a[contains(@href, '/all-orders')]")
+    private WebElement allOrdersLink;
 
-    @FindBy(xpath = "//dt[contains(text(),'Created At')]")
-    private WebElement createdAtLabel;
-
-    @FindBy(xpath = "//dd[contains(@class, 'text-gray-700')]")
-    private WebElement createdAtValue;
+    @FindBy(xpath = "//a[contains(@href, '/profile')]")
+    private WebElement profileLink;
 
     // **Footer Elements**
     @FindBy(xpath = "//footer")
@@ -94,7 +92,7 @@ public class SingleCategoryPage extends Verification {
     private WebElement returnPolicyLink;
 
     // **Constructor for Initialization**
-    public SingleCategoryPage(WebDriver driver) {
+    public AllCouponsPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
@@ -140,38 +138,38 @@ public class SingleCategoryPage extends Verification {
         cartIcon.click();
     }
 
-    // **Category Page Methods**
-    public String getCategoryTitle() {
-        return categoryTitle.getText();
+    // **All Coupons Page Methods**
+    public String getAllCouponsTitle() {
+        return allCouponsTitle.getText();
     }
 
-    public boolean verifyCategoryTitle(SoftAssert softAssert, String expectedTitle) {
-        return verifyTextPresent(categoryTitle.getText(), softAssert);
+    public boolean verifyAllCouponsTitle(SoftAssert softAssert, String expectedTitle) {
+        return verifyTextPresent(allCouponsTitle.getText(), softAssert);
     }
 
-    public void clickAllCategoriesLink() {
-        allCategoriesLink.click();
+    public void enterSearchText(String couponName) {
+        searchField.clear();
+        searchField.sendKeys(couponName);
     }
 
-    public String getCategoryDetailsTitle() {
-        return categoryDetailsTitle.getText();
+    public void clickCreateCouponLink() {
+        createCouponLink.click();
     }
 
-    public boolean isCategoryNameDisplayed() {
-        return categoryNameLabel.isDisplayed();
+    public void clickAllOrdersLink() {
+        allOrdersLink.click();
     }
 
-    public void enterCategoryName(String categoryName) {
-        categoryNameInput.clear();
-        categoryNameInput.sendKeys(categoryName);
+    public void clickProfileLink() {
+        profileLink.click();
     }
 
-    public void clickEditSaveButton() {
-        editSaveButton.click();
+    public int getAllCouponsCount() {
+        return couponList.size();
     }
 
-    public String getCreatedAtDate() {
-        return createdAtValue.getText();
+    public void deleteCoupon(int index) {
+        deleteCouponButtons.get(index).click();
     }
 
     // **Footer Methods**

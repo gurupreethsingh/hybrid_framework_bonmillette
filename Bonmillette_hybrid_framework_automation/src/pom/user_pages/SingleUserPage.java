@@ -49,10 +49,6 @@ public class SingleUserPage extends Verification {
         return userRole.getText();
     }
 
-    public void selectNewRole(String newRole) {
-        selectByVisibleText(roleDropdown, newRole);
-    }
-
     public void clickUpdateRoleButton() {
         updateRoleButton.click();
     }

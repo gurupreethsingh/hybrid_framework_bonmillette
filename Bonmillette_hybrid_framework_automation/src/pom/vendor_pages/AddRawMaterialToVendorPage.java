@@ -67,10 +67,6 @@ public class AddRawMaterialToVendorPage extends Verification {
         return addRawMaterialHeading.getText();
     }
 
-    // Select Vendor
-    public void selectVendor(String vendorName) {
-        selectDropdownByVisibleText(vendorDropdown, vendorName);
-    }
 
     // Enter Raw Material Name
     public void enterRawMaterialName(String materialName) {
@@ -84,10 +80,6 @@ public class AddRawMaterialToVendorPage extends Verification {
         quantityInput.sendKeys(quantity);
     }
 
-    // Select Unit
-    public void selectUnit(String unit) {
-        selectDropdownByVisibleText(unitDropdown, unit);
-    }
 
     // Enter Ordered Date
     public void enterOrderedDate(String orderedDate) {
@@ -129,13 +121,4 @@ public class AddRawMaterialToVendorPage extends Verification {
         viewAllRawMaterialsButton.click();
     }
 
-    // Verify Add Raw Material Page Title
-    public void verifyAddRawMaterialTitle(String expectedTitle) {
-        verifyTitle(expectedTitle);
-    }
-
-    // Verify Add Raw Material Page URL
-    public void verifyAddRawMaterialUrl(String expectedUrl) {
-        verifyUrl(expectedUrl);
-    }
 }

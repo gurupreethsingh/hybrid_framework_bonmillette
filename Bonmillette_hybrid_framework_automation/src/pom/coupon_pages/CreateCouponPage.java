@@ -1,4 +1,4 @@
-package pom.category_pages;
+package pom.coupon_pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,7 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.asserts.SoftAssert;
 import generic.Verification;
 
-public class SingleCategoryPage extends Verification {
+public class CreateCouponPage extends Verification {
 
     // **Header Elements**
     @FindBy(xpath = "//header")
@@ -40,30 +40,49 @@ public class SingleCategoryPage extends Verification {
     @FindBy(xpath = "(//*[name()='svg'])[2]")
     private WebElement cartIcon;
 
-    // **Category Details Elements**
-    @FindBy(xpath = "//h2[contains(@class, 'text-3xl font-bold')]")
-    private WebElement categoryTitle;
+    // **Navigation Elements**
+    @FindBy(xpath = "//a[contains(@href, '/superadmin-dashboard')]")
+    private WebElement dashboardLink;
 
-    @FindBy(xpath = "//a[@href='/all-categories']")
-    private WebElement allCategoriesLink;
+    @FindBy(xpath = "//a[contains(@href, '/all-coupons')]")
+    private WebElement allCouponsLink;
 
-    @FindBy(xpath = "//h3[contains(@class, 'text-lg font-semibold')]")
-    private WebElement categoryDetailsTitle;
+    @FindBy(xpath = "//a[contains(@href, '/all-orders')]")
+    private WebElement allOrdersLink;
 
-    @FindBy(xpath = "//dt[contains(text(),'Category Name')]")
-    private WebElement categoryNameLabel;
+    @FindBy(xpath = "//a[contains(@href, '/profile')]")
+    private WebElement profileLink;
 
-    @FindBy(xpath = "//input[contains(@class, 'border px-2 py-1 rounded')]")
-    private WebElement categoryNameInput;
+    @FindBy(xpath = "//button[contains(text(),'Logout')]")
+    private WebElement logoutButton;
 
-    @FindBy(xpath = "//button[contains(@class, 'bg-blue-500 text-white')]")
-    private WebElement editSaveButton;
+    // **Create Coupon Form Elements**
+    @FindBy(xpath = "//h2[contains(text(),'Create a New Coupon')]")
+    private WebElement createCouponTitle;
 
-    @FindBy(xpath = "//dt[contains(text(),'Created At')]")
-    private WebElement createdAtLabel;
+    @FindBy(id = "code")
+    private WebElement couponCodeInput;
 
-    @FindBy(xpath = "//dd[contains(@class, 'text-gray-700')]")
-    private WebElement createdAtValue;
+    @FindBy(id = "discount")
+    private WebElement discountInput;
+
+    @FindBy(id = "maxDiscountAmount")
+    private WebElement maxDiscountAmountInput;
+
+    @FindBy(id = "expirationDate")
+    private WebElement expirationDateInput;
+
+    @FindBy(id = "usageLimit")
+    private WebElement usageLimitInput;
+
+    @FindBy(id = "minCartValue")
+    private WebElement minCartValueInput;
+
+    @FindBy(id = "isActive")
+    private WebElement isActiveCheckbox;
+
+    @FindBy(xpath = "//button[@type='submit']")
+    private WebElement createCouponButton;
 
     // **Footer Elements**
     @FindBy(xpath = "//footer")
@@ -94,7 +113,7 @@ public class SingleCategoryPage extends Verification {
     private WebElement returnPolicyLink;
 
     // **Constructor for Initialization**
-    public SingleCategoryPage(WebDriver driver) {
+    public CreateCouponPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
@@ -140,38 +159,68 @@ public class SingleCategoryPage extends Verification {
         cartIcon.click();
     }
 
-    // **Category Page Methods**
-    public String getCategoryTitle() {
-        return categoryTitle.getText();
+    // **Navigation Methods**
+    public void clickDashboardLink() {
+        dashboardLink.click();
     }
 
-    public boolean verifyCategoryTitle(SoftAssert softAssert, String expectedTitle) {
-        return verifyTextPresent(categoryTitle.getText(), softAssert);
+    public void clickAllCouponsLink() {
+        allCouponsLink.click();
     }
 
-    public void clickAllCategoriesLink() {
-        allCategoriesLink.click();
+    public void clickAllOrdersLink() {
+        allOrdersLink.click();
     }
 
-    public String getCategoryDetailsTitle() {
-        return categoryDetailsTitle.getText();
+    public void clickProfileLink() {
+        profileLink.click();
     }
 
-    public boolean isCategoryNameDisplayed() {
-        return categoryNameLabel.isDisplayed();
+    public void clickLogoutButton() {
+        logoutButton.click();
     }
 
-    public void enterCategoryName(String categoryName) {
-        categoryNameInput.clear();
-        categoryNameInput.sendKeys(categoryName);
+    // **Create Coupon Form Methods**
+    public boolean verifyCreateCouponTitle(SoftAssert softAssert, String expectedTitle) {
+        return verifyTextPresent(createCouponTitle.getText(), softAssert);
     }
 
-    public void clickEditSaveButton() {
-        editSaveButton.click();
+    public void enterCouponCode(String code) {
+        couponCodeInput.clear();
+        couponCodeInput.sendKeys(code);
     }
 
-    public String getCreatedAtDate() {
-        return createdAtValue.getText();
+    public void enterDiscount(String discount) {
+        discountInput.clear();
+        discountInput.sendKeys(discount);
+    }
+
+    public void enterMaxDiscountAmount(String amount) {
+        maxDiscountAmountInput.clear();
+        maxDiscountAmountInput.sendKeys(amount);
+    }
+
+    public void enterExpirationDate(String date) {
+        expirationDateInput.clear();
+        expirationDateInput.sendKeys(date);
+    }
+
+    public void enterUsageLimit(String limit) {
+        usageLimitInput.clear();
+        usageLimitInput.sendKeys(limit);
+    }
+
+    public void enterMinCartValue(String value) {
+        minCartValueInput.clear();
+        minCartValueInput.sendKeys(value);
+    }
+
+    public void toggleIsActiveCheckbox() {
+        isActiveCheckbox.click();
+    }
+
+    public void clickCreateCouponButton() {
+        createCouponButton.click();
     }
 
     // **Footer Methods**
@@ -207,4 +256,3 @@ public class SingleCategoryPage extends Verification {
         returnPolicyLink.click();
     }
 }
-

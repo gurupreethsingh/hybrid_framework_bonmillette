@@ -1,5 +1,6 @@
-package pom.admin_pages;
+package pom.common_pages;
 
+import java.io.IOException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,34 +9,31 @@ import org.testng.asserts.SoftAssert;
 
 import generic.Verification;
 
-public class AdminDashboardPage extends Verification {
+public class ReturnPolicyPage extends Verification {
     
-    @FindBy(xpath="//h2[contains(text(),'Hello')]")
-    private WebElement dashboardGreeting;
+    @FindBy(xpath="//h1[contains(text(),'Return Policy')]")
+    private WebElement returnPolicyTitle;
     
-    @FindBy(xpath="//h3[contains(text(),'Navigation')]")
-    private WebElement navigationTitle;
+    @FindBy(xpath="//p[contains(text(),'We strive to ensure your satisfaction with every purchase')]")
+    private WebElement returnPolicyDescription;
     
-    @FindBy(xpath="//a[contains(@href, '/superadmin-dashboard')]")
-    private WebElement superAdminDashboardLink;
+    @FindBy(xpath="//h2[contains(text(),'Return Conditions')]")
+    private WebElement returnConditionsTitle;
     
-    @FindBy(xpath="//a[contains(@href, '/my-orders')]")
-    private WebElement manageOrdersLink;
+    @FindBy(xpath="//ul[contains(@class,'list-disc')]//li")
+    private WebElement returnConditionsList;
     
-    @FindBy(xpath="//a[contains(@href, '/all-users')]")
-    private WebElement manageUsersLink;
+    @FindBy(xpath="//h2[contains(text(),'How to Initiate a Return')]")
+    private WebElement howToInitiateReturnTitle;
     
-    @FindBy(xpath="//a[contains(@href, '/profile')]")
-    private WebElement accountDetailsLink;
+    @FindBy(xpath="//p[contains(text(),'Contact our customer service team')]")
+    private WebElement howToInitiateReturnDescription;
     
-    @FindBy(xpath="//button[contains(text(),'Logout')]")
-    private WebElement logoutButton;
+    @FindBy(xpath="//h2[contains(text(),'Refunds')]")
+    private WebElement refundsTitle;
     
-    @FindBy(xpath="//a[contains(@href, '/all-orders')]")
-    private WebElement allOrdersLink;
-    
-    @FindBy(xpath="//a[contains(@href, '/all-categories')]")
-    private WebElement allCategoriesLink;
+    @FindBy(xpath="//p[contains(text(),'Refunds will be processed within 7-10 business days')]")
+    private WebElement refundsDescription;
     
     // Header and Footer elements
     @FindBy(xpath="//img[@alt='Logo']")
@@ -93,21 +91,17 @@ public class AdminDashboardPage extends Verification {
     private WebElement returnPolicyLink;
     
     // Constructor for initialization
-    public AdminDashboardPage(WebDriver driver) {
+    public ReturnPolicyPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
     
     // Utilization methods to interact with elements
-    public void clickLogoutButton() {
-        logoutButton.click();
-    }
-    
-    public boolean verifyAdminDashboardTitle(String expectedTitle, SoftAssert softAssert) {
+    public boolean verifyReturnPolicyTitle(String expectedTitle, SoftAssert softAssert) {
         return verifyTitle(expectedTitle, softAssert);
     }
     
-    public boolean verifyAdminDashboardUrl(String expectedUrl, SoftAssert softAssert) {
+    public boolean verifyReturnPolicyUrl(String expectedUrl, SoftAssert softAssert) {
         return verifyUrl(expectedUrl, softAssert);
     }
     

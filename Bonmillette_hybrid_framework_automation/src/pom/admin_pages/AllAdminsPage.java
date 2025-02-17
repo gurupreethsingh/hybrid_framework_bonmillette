@@ -1,93 +1,111 @@
 package pom.admin_pages;
 
-import java.io.IOException;
-import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.asserts.SoftAssert;
+
 import generic.Verification;
 
 public class AllAdminsPage extends Verification {
-
-    @FindBy(xpath = "//h2[contains(text(),'All Users')]")
-    private WebElement allUsersHeading;
-
-    @FindBy(xpath = "//input[@placeholder='Search users...']")
-    private WebElement searchField;
-
-    @FindBy(xpath = "//button[contains(@class,'bg-red-500')]")
-    private List<WebElement> deleteButtons;
-
-    @FindBy(xpath = "//div[contains(@class,'grid-cols-1') or contains(@class,'grid-cols-2') or contains(@class,'grid-cols-3')]//h3")
-    private List<WebElement> userNames;
-
-    @FindBy(xpath = "//div[contains(@class,'grid-cols-1') or contains(@class,'grid-cols-2') or contains(@class,'grid-cols-3')]//p[1]")
-    private List<WebElement> userEmails;
-
-    @FindBy(xpath = "//div[contains(@class,'grid-cols-1') or contains(@class,'grid-cols-2') or contains(@class,'grid-cols-3')]//p[2]")
-    private List<WebElement> userRoles;
-
-    @FindBy(xpath = "//svg[@data-icon='th-list']")
-    private WebElement listViewButton;
-
-    @FindBy(xpath = "//svg[@data-icon='th-large']")
-    private WebElement cardViewButton;
-
-    @FindBy(xpath = "//svg[@data-icon='th']")
-    private WebElement gridViewButton;
-
-    // Constructor to initialize elements
+    
+    @FindBy(xpath="//h2[contains(text(),'All Users')]")
+    private WebElement allUsersTitle;
+    
+    @FindBy(xpath="//input[@placeholder='Search users...']")
+    private WebElement searchUsersInput;
+    
+    @FindBy(xpath="//*[name()='svg' and contains(@class, 'FaSearch')]")
+    private WebElement searchIcon;
+    
+    @FindBy(xpath="//*[name()='svg' and contains(@class, 'FaThList')]")
+    private WebElement listViewIcon;
+    
+    @FindBy(xpath="//*[name()='svg' and contains(@class, 'FaThLarge')]")
+    private WebElement cardViewIcon;
+    
+    @FindBy(xpath="//*[name()='svg' and contains(@class, 'FaTh')]")
+    private WebElement gridViewIcon;
+    
+    @FindBy(xpath="//button[contains(@class, 'bg-red-500')]")
+    private WebElement deleteUserButton;
+    
+    // Header and Footer elements
+    @FindBy(xpath="//img[@alt='Logo']")
+    private WebElement headerLogo;
+    
+    @FindBy(xpath="//nav//a[@href='/home']")
+    private WebElement homeLink;
+    
+    @FindBy(xpath="//nav//a[@href='/shop']")
+    private WebElement shopLink;
+    
+    @FindBy(xpath="//nav//a[@href='/our-story']")
+    private WebElement ourStoryLink;
+    
+    @FindBy(xpath="//nav//a[@href='/all-blogs']")
+    private WebElement blogLink;
+    
+    @FindBy(xpath="//nav//a[@href='/testimonials']")
+    private WebElement testimonialsLink;
+    
+    @FindBy(xpath="//nav//a[@href='/contact-us']")
+    private WebElement contactUsNavLink;
+    
+    @FindBy(xpath="//button[contains(text(),'My Account')]")
+    private WebElement myAccountButton;
+    
+    @FindBy(xpath="//*[name()='svg' and contains(@class, 'AiOutlineSearch')]")
+    private WebElement globalSearchIcon;
+    
+    @FindBy(xpath="//*[name()='svg' and contains(@class, 'HiOutlineShoppingBag')]")
+    private WebElement cartIcon;
+    
+    @FindBy(xpath="//img[@alt='company logo']")
+    private WebElement footerLogo;
+    
+    @FindBy(xpath="//a[contains(@href, 'instagram.com')]")
+    private WebElement instagramLink;
+    
+    @FindBy(xpath="//a[contains(@href, 'linkedin.com')]")
+    private WebElement linkedinLink;
+    
+    @FindBy(xpath="//a[contains(@href, 'facebook.com')]")
+    private WebElement facebookLink;
+    
+    @FindBy(xpath="//a[contains(@href, 'twitter.com')]")
+    private WebElement twitterLink;
+    
+    @FindBy(xpath="//a[@href='/privacy-policy']")
+    private WebElement privacyPolicyLink;
+    
+    @FindBy(xpath="//a[@href='/terms-and-conditions']")
+    private WebElement termsAndConditionsLink;
+    
+    @FindBy(xpath="//a[@href='/return-policy']")
+    private WebElement returnPolicyLink;
+    
+    // Constructor for initialization
     public AllAdminsPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
-
-    // Methods to interact with elements
-    public String getAllUsersHeading() {
-        return allUsersHeading.getText();
+    
+    // Utilization methods to interact with elements
+    public void clickDeleteUserButton() {
+        deleteUserButton.click();
     }
-
-    public void searchUser(String userName) {
-        searchField.clear();
-        searchField.sendKeys(userName);
+    
+    public boolean verifyAllAdminsTitle(String expectedTitle, SoftAssert softAssert) {
+        return verifyTitle(expectedTitle, softAssert);
     }
-
-    public void deleteFirstUser() {
-        if (!deleteButtons.isEmpty()) {
-            deleteButtons.get(0).click();
-        }
+    
+    public boolean verifyAllAdminsUrl(String expectedUrl, SoftAssert softAssert) {
+        return verifyUrl(expectedUrl, softAssert);
     }
-
-    public List<String> getAllUserNames() {
-        return getElementsText(userNames);
-    }
-
-    public List<String> getAllUserEmails() {
-        return getElementsText(userEmails);
-    }
-
-    public List<String> getAllUserRoles() {
-        return getElementsText(userRoles);
-    }
-
-    public void switchToListView() {
-        listViewButton.click();
-    }
-
-    public void switchToCardView() {
-        cardViewButton.click();
-    }
-
-    public void switchToGridView() {
-        gridViewButton.click();
-    }
-
-    public void verifyAllAdminsPageTitle(String expectedTitle) throws IOException {
-        verifyTitle(expectedTitle);
-    }
-
-    public void verifyAllAdminsPageUrl(String expectedUrl) throws IOException {
-        verifyUrl(expectedUrl);
+    
+    public boolean verifyTextPresence(String expectedText, SoftAssert softAssert) {
+        return verifyTextPresent(expectedText, softAssert);
     }
 }

@@ -1,5 +1,6 @@
-package pom.admin_pages;
+package pom.blog_pages;
 
+import java.io.IOException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,34 +9,46 @@ import org.testng.asserts.SoftAssert;
 
 import generic.Verification;
 
-public class AdminDashboardPage extends Verification {
+public class SingleBlogPage extends Verification {
     
-    @FindBy(xpath="//h2[contains(text(),'Hello')]")
-    private WebElement dashboardGreeting;
+    @FindBy(xpath="//h1")
+    private WebElement blogTitle;
     
-    @FindBy(xpath="//h3[contains(text(),'Navigation')]")
-    private WebElement navigationTitle;
+    @FindBy(xpath="//p[contains(text(),'Published on')]")
+    private WebElement publishedDate;
     
-    @FindBy(xpath="//a[contains(@href, '/superadmin-dashboard')]")
-    private WebElement superAdminDashboardLink;
+    @FindBy(xpath="//img[contains(@class, 'w-full h-auto')]")
+    private WebElement featuredImage;
     
-    @FindBy(xpath="//a[contains(@href, '/my-orders')]")
-    private WebElement manageOrdersLink;
+    @FindBy(xpath="//div[contains(@class, 'text-lg mb-4')]")
+    private WebElement blogContent;
     
-    @FindBy(xpath="//a[contains(@href, '/all-users')]")
-    private WebElement manageUsersLink;
+    @FindBy(xpath="//input[@placeholder='Search blogs...']")
+    private WebElement searchInput;
     
-    @FindBy(xpath="//a[contains(@href, '/profile')]")
-    private WebElement accountDetailsLink;
+    @FindBy(xpath="//h3[contains(text(),'Latest Blogs')]")
+    private WebElement latestBlogsSection;
     
-    @FindBy(xpath="//button[contains(text(),'Logout')]")
-    private WebElement logoutButton;
+    @FindBy(xpath="//h3[contains(text(),'Categories')]")
+    private WebElement categoriesSection;
     
-    @FindBy(xpath="//a[contains(@href, '/all-orders')]")
-    private WebElement allOrdersLink;
+    @FindBy(xpath="//h3[contains(text(),'Tags')]")
+    private WebElement tagsSection;
     
-    @FindBy(xpath="//a[contains(@href, '/all-categories')]")
-    private WebElement allCategoriesLink;
+    @FindBy(xpath="//button[contains(@class, 'text-xs bg-gray-200')]")
+    private WebElement blogTags;
+    
+    @FindBy(xpath="//a[contains(@href, '/single-blog/')]")
+    private WebElement relatedBlogLinks;
+    
+    @FindBy(xpath="//button[contains(@class, 'cursor-pointer')]//svg")
+    private WebElement viewToggleButtons;
+    
+    @FindBy(xpath="//button[contains(@class, 'cursor-pointer') and contains(@class, 'FaArrowLeft')]")
+    private WebElement previousBlogButton;
+    
+    @FindBy(xpath="//button[contains(@class, 'cursor-pointer') and contains(@class, 'FaArrowRight')]")
+    private WebElement nextBlogButton;
     
     // Header and Footer elements
     @FindBy(xpath="//img[@alt='Logo']")
@@ -93,21 +106,25 @@ public class AdminDashboardPage extends Verification {
     private WebElement returnPolicyLink;
     
     // Constructor for initialization
-    public AdminDashboardPage(WebDriver driver) {
+    public SingleBlogPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
     
     // Utilization methods to interact with elements
-    public void clickLogoutButton() {
-        logoutButton.click();
+    public void clickPreviousBlogButton() {
+        previousBlogButton.click();
     }
     
-    public boolean verifyAdminDashboardTitle(String expectedTitle, SoftAssert softAssert) {
+    public void clickNextBlogButton() {
+        nextBlogButton.click();
+    }
+    
+    public boolean verifySingleBlogTitle(String expectedTitle, SoftAssert softAssert) {
         return verifyTitle(expectedTitle, softAssert);
     }
     
-    public boolean verifyAdminDashboardUrl(String expectedUrl, SoftAssert softAssert) {
+    public boolean verifySingleBlogUrl(String expectedUrl, SoftAssert softAssert) {
         return verifyUrl(expectedUrl, softAssert);
     }
     

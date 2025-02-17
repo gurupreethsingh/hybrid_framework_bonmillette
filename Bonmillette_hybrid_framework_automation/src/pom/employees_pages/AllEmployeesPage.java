@@ -1,5 +1,6 @@
-package pom.category_pages;
+package pom.employees_pages;
 
+import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -7,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.asserts.SoftAssert;
 import generic.Verification;
 
-public class SingleCategoryPage extends Verification {
+public class AllEmployeesPage extends Verification {
 
     // **Header Elements**
     @FindBy(xpath = "//header")
@@ -19,20 +20,17 @@ public class SingleCategoryPage extends Verification {
     @FindBy(xpath = "//nav//a[@href='/home']")
     private WebElement homeLink;
 
-    @FindBy(xpath = "//nav//a[@href='/shop']")
-    private WebElement shopLink;
+    @FindBy(xpath = "//nav//a[@href='/employees']")
+    private WebElement employeesLink;
 
-    @FindBy(xpath = "//nav//a[@href='/our-story']")
-    private WebElement ourStoryLink;
+    @FindBy(xpath = "//nav//a[@href='/assign-order']")
+    private WebElement assignOrderLink;
 
-    @FindBy(xpath = "//nav//a[@href='/all-blogs']")
-    private WebElement blogLink;
+    @FindBy(xpath = "//nav//a[@href='/profile']")
+    private WebElement profileLink;
 
-    @FindBy(xpath = "//nav//a[@href='/contact-us']")
-    private WebElement contactUsLink;
-
-    @FindBy(xpath = "//button[contains(@class, 'text-black font-bold text-lg')]")
-    private WebElement myAccountButton;
+    @FindBy(xpath = "//nav//a[@href='/logout']")
+    private WebElement logoutLink;
 
     @FindBy(xpath = "(//*[name()='svg'])[1]")
     private WebElement searchIcon;
@@ -40,30 +38,33 @@ public class SingleCategoryPage extends Verification {
     @FindBy(xpath = "(//*[name()='svg'])[2]")
     private WebElement cartIcon;
 
-    // **Category Details Elements**
-    @FindBy(xpath = "//h2[contains(@class, 'text-3xl font-bold')]")
-    private WebElement categoryTitle;
+    // **All Employees Page Elements**
+    @FindBy(xpath = "//h2[contains(text(),'All Users')]")
+    private WebElement allUsersTitle;
 
-    @FindBy(xpath = "//a[@href='/all-categories']")
-    private WebElement allCategoriesLink;
+    @FindBy(xpath = "//input[@placeholder='Search users...']")
+    private WebElement searchField;
 
-    @FindBy(xpath = "//h3[contains(@class, 'text-lg font-semibold')]")
-    private WebElement categoryDetailsTitle;
+    @FindBy(xpath = "//div[contains(@class,'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4')]/div")
+    private List<WebElement> gridViewUsers;
 
-    @FindBy(xpath = "//dt[contains(text(),'Category Name')]")
-    private WebElement categoryNameLabel;
+    @FindBy(xpath = "//div[contains(@class,'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6')]/div")
+    private List<WebElement> cardViewUsers;
 
-    @FindBy(xpath = "//input[contains(@class, 'border px-2 py-1 rounded')]")
-    private WebElement categoryNameInput;
+    @FindBy(xpath = "//div[contains(@class,'space-y-6')]/div")
+    private List<WebElement> listViewUsers;
 
-    @FindBy(xpath = "//button[contains(@class, 'bg-blue-500 text-white')]")
-    private WebElement editSaveButton;
+    @FindBy(xpath = "//button[contains(@title,'Delete User')]")
+    private List<WebElement> deleteUserButtons;
 
-    @FindBy(xpath = "//dt[contains(text(),'Created At')]")
-    private WebElement createdAtLabel;
+    @FindBy(xpath = "(//svg[contains(@class,'text-xl')])[1]")
+    private WebElement listViewIcon;
 
-    @FindBy(xpath = "//dd[contains(@class, 'text-gray-700')]")
-    private WebElement createdAtValue;
+    @FindBy(xpath = "(//svg[contains(@class,'text-xl')])[2]")
+    private WebElement cardViewIcon;
+
+    @FindBy(xpath = "(//svg[contains(@class,'text-xl')])[3]")
+    private WebElement gridViewIcon;
 
     // **Footer Elements**
     @FindBy(xpath = "//footer")
@@ -94,7 +95,7 @@ public class SingleCategoryPage extends Verification {
     private WebElement returnPolicyLink;
 
     // **Constructor for Initialization**
-    public SingleCategoryPage(WebDriver driver) {
+    public AllEmployeesPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
@@ -112,24 +113,20 @@ public class SingleCategoryPage extends Verification {
         homeLink.click();
     }
 
-    public void clickShopLink() {
-        shopLink.click();
+    public void clickEmployeesLink() {
+        employeesLink.click();
     }
 
-    public void clickOurStoryLink() {
-        ourStoryLink.click();
+    public void clickAssignOrderLink() {
+        assignOrderLink.click();
     }
 
-    public void clickBlogLink() {
-        blogLink.click();
+    public void clickProfileLink() {
+        profileLink.click();
     }
 
-    public void clickContactUsLink() {
-        contactUsLink.click();
-    }
-
-    public void clickMyAccountButton() {
-        myAccountButton.click();
+    public void clickLogoutLink() {
+        logoutLink.click();
     }
 
     public void clickSearchIcon() {
@@ -140,38 +137,42 @@ public class SingleCategoryPage extends Verification {
         cartIcon.click();
     }
 
-    // **Category Page Methods**
-    public String getCategoryTitle() {
-        return categoryTitle.getText();
+    // **All Employees Page Methods**
+    public String getAllUsersTitle() {
+        return allUsersTitle.getText();
     }
 
-    public boolean verifyCategoryTitle(SoftAssert softAssert, String expectedTitle) {
-        return verifyTextPresent(categoryTitle.getText(), softAssert);
+    public void enterSearchText(String query) {
+        searchField.clear();
+        searchField.sendKeys(query);
     }
 
-    public void clickAllCategoriesLink() {
-        allCategoriesLink.click();
+    public void selectListView() {
+        listViewIcon.click();
     }
 
-    public String getCategoryDetailsTitle() {
-        return categoryDetailsTitle.getText();
+    public void selectCardView() {
+        cardViewIcon.click();
     }
 
-    public boolean isCategoryNameDisplayed() {
-        return categoryNameLabel.isDisplayed();
+    public void selectGridView() {
+        gridViewIcon.click();
     }
 
-    public void enterCategoryName(String categoryName) {
-        categoryNameInput.clear();
-        categoryNameInput.sendKeys(categoryName);
+    public int getGridViewUsersCount() {
+        return gridViewUsers.size();
     }
 
-    public void clickEditSaveButton() {
-        editSaveButton.click();
+    public int getCardViewUsersCount() {
+        return cardViewUsers.size();
     }
 
-    public String getCreatedAtDate() {
-        return createdAtValue.getText();
+    public int getListViewUsersCount() {
+        return listViewUsers.size();
+    }
+
+    public void deleteUser(int index) {
+        deleteUserButtons.get(index).click();
     }
 
     // **Footer Methods**

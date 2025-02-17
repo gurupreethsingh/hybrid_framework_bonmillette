@@ -17,12 +17,12 @@ public abstract class OpenClose implements AutomationConstants
 	  driver = new ChromeDriver();
 	  driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 	  // open the webpage
-//	  driver.get(urlOfApplication);
+	  driver.get(urlOfApplication);
 //	  driver.get(urlOfShopPage);
 //	  driver.get(urlOfApplication_withForwardSlash);
 //	  driver.get(urlOfApplication_withHomeText);
 //	  driver.get(urlOfApplication_withHomepageText);
-	  driver.get(urlOfApplication_registerPage);
+//	  driver.get(urlOfApplication_registerPage);
 	  driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
   }
   

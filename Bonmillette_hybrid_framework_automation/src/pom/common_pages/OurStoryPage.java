@@ -1,147 +1,141 @@
 package pom.common_pages;
 
-import java.io.IOException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.asserts.SoftAssert;
+
 import generic.Verification;
 
-public class OurStoryPage extends Verification
-{
-	public static WebDriver driver;
-	  // declare all the webElements, keep them private. 
-		@FindBy(xpath="//img[@class='w-20 h-20']")
-		private WebElement bonmilletteLogo;
-		
-		@FindBy(xpath="//a[@href='/home']")
-		private WebElement homeLink;
-		
-		// shop link.
-		@FindBy(xpath="(//a[@href='/shop'])[1]")
-		private WebElement shopLink;
-		
-		// shop link.
-		@FindBy(xpath="(//a[@href='/about-us'])[1]")
-		private WebElement aboutUsLink;
-		
-		// our story link.
-		@FindBy(xpath="(//a[@href='/our-story'])[1]")
-		private WebElement ourStoryLink;
-		
-		// blog link.
-		@FindBy(xpath="(//a[@href='/all-blogs'])[1]")
-		private WebElement blogLink;
-		
-		// testimonials link.
-		@FindBy(xpath="(//a[@href='/testimonials'])[1]")
-		private WebElement testimonialsLink;
-		
-		// contact link.
-		@FindBy(xpath="(//a[@href='/contact-us'])[1]")
-		private WebElement contactUsLink;
-		
-		@FindBy(xpath="//button[@class='hidden md:flex text-black font-bold text-lg']")
-		private WebElement myAccountButton;
-		
-		@FindBy(xpath="(//*[local-name()='svg'])[1]")
-		private WebElement searchIcon;
-		
-		@FindBy(xpath="(//*[local-name()='svg'])[2]")
-		private WebElement cartIcon;
-	
-	@FindBy(xpath="//img[@class='rounded-5 w-full']")
-	private WebElement ourStoryBannerText;
-	
-	
-	@FindBy(xpath="//img[@class='rounded-5 mx-auto w-full max-w-5xl']")
-	private WebElement brandJourneyText;
-	
-	@FindBy(xpath="//p[@class='text-lg sm:text-xl lg:text-2xl p-5 font-bold']")
-	private WebElement bonmilletteSubText;
-	
-	@FindBy(xpath="//div[@class='all_product_content mb-5 mt-5 text-white w-full lg:w-1/2  lg:text-left']")
-	private WebElement whyMilletteText;
-	
-	
-	public OurStoryPage()
-
-	{
-		super(driver);
-		PageFactory.initElements(driver, this);
-	}
-	
-	// utilization , by creating functions to perform actions. 
-		public void clickOnLogo(){
-			bonmilletteLogo.click();
-		}
-		
-		public void clickOnHomeLink(){
-			homeLink.click();
-		}
-		
-		public void clickOnShopLink(){
-			shopLink.click();
-		}
-		
-		public void clickOnAboutUsLink(){
-			aboutUsLink.click();
-		}
-		
-		public void clickOnOurStoryLink(){
-			ourStoryLink.click();
-		}
-		
-		public void clickOnBlogLink(){
-			blogLink.click();
-		}
-		
-		public void clickOnTestimonialsLink(){
-			testimonialsLink.click();
-		}
-		
-		public void clickOnContactUsLink(){
-			contactUsLink.click();
-		}
-		
-		public void clickOnMyAccountButton(){
-			myAccountButton.click();
-		}
-		
-		public void clickOnSearchIcon(){
-			searchIcon.click();
-		}
-		
-		public void clickOnCartIcon(){
-			cartIcon.click();
-		}
-	
-	public void getOurStoryBannerText()
-	{
-		String actualOurStoryBannerText=ourStoryBannerText.getText();
-	}
-	
-	public void getBrandJourneyText()
-	{
-	String actualBrandJourneyText	=brandJourneyText.getText();
-	}
-	
-	public void getBonmilletteSubText()
-	{
-		String actualBonmilletteSubText=bonmilletteSubText.getText();
-	}
-	
-	public void getWhyMilletteText()
-	{
-		String actualWhyMilletteText=whyMilletteText.getText();
-	}
-	public void verifyOurStoryTitle(String ExpectedTitle)throws IOException
-	{
-		verifyTitle(ExpectedTitle);
-	}
-	
-	public void verifyOutStoryPageUrl(String expectedUrl) throws IOException
-	{
-		verifyUrl(expectedUrl);
-	}	
+public class OurStoryPage extends Verification {
+    
+    @FindBy(xpath="//img[contains(@src, 'Our_Story_Banner.jpg')]")
+    private WebElement ourStoryBanner;
+    
+    @FindBy(xpath="//img[contains(@src, 'our_journey.png')]")
+    private WebElement ourJourneyImage;
+    
+    @FindBy(xpath="//img[contains(@src, 'lady.png')]")
+    private WebElement ladyImage;
+    
+    @FindBy(xpath="//p[contains(text(),'Bon Millette is founded')]")
+    private WebElement bonMilletteStory;
+    
+    @FindBy(xpath="//img[contains(@src, 'variety-legumes.png')]")
+    private WebElement varietyLegumesImage;
+    
+    @FindBy(xpath="//p[contains(text(),'Why Millets')]")
+    private WebElement whyMilletsTitle;
+    
+    @FindBy(xpath="//p[contains(text(),'Millets are more than just a grain')]")
+    private WebElement whyMilletsDescription;
+    
+    @FindBy(xpath="//p[contains(text(),'Nutritious Powerhouse')]")
+    private WebElement nutritiousPowerhouse;
+    
+    @FindBy(xpath="//p[contains(text(),'Sustainable Choice')]")
+    private WebElement sustainableChoice;
+    
+    @FindBy(xpath="//p[contains(text(),'Energizing Fuel')]")
+    private WebElement energizingFuel;
+    
+    @FindBy(xpath="//p[contains(text(),'Allergen-Friendly')]")
+    private WebElement allergenFriendly;
+    
+    @FindBy(xpath="//p[contains(text(),'Pure Ingredients')]")
+    private WebElement pureIngredients;
+    
+    @FindBy(xpath="//p[contains(text(),'Natural Sweeteners')]")
+    private WebElement naturalSweeteners;
+    
+    @FindBy(xpath="//p[contains(text(),'Mindful Recipes')]")
+    private WebElement mindfulRecipes;
+    
+    @FindBy(xpath="//img[contains(@src, 'mixes_items.jpg')]")
+    private WebElement mixItemsImage;
+    
+    @FindBy(xpath="//p[contains(text(),'Ready to snack smarter?')]")
+    private WebElement snackSmarterText;
+    
+    @FindBy(xpath="//a[@href='/shop' and contains(@class, 'bg-red-500')]")
+    private WebElement shopNowButton;
+    
+    // Header and Footer elements from ContactUsPage
+    @FindBy(xpath="//img[@alt='Logo']")
+    private WebElement headerLogo;
+    
+    @FindBy(xpath="//nav//a[@href='/home']")
+    private WebElement homeLink;
+    
+    @FindBy(xpath="//nav//a[@href='/shop']")
+    private WebElement shopLink;
+    
+    @FindBy(xpath="//nav//a[@href='/our-story']")
+    private WebElement ourStoryLink;
+    
+    @FindBy(xpath="//nav//a[@href='/all-blogs']")
+    private WebElement blogLink;
+    
+    @FindBy(xpath="//nav//a[@href='/testimonials']")
+    private WebElement testimonialsLink;
+    
+    @FindBy(xpath="//nav//a[@href='/contact-us']")
+    private WebElement contactUsNavLink;
+    
+    @FindBy(xpath="//button[contains(text(),'My Account')]")
+    private WebElement myAccountButton;
+    
+    @FindBy(xpath="//*[name()='svg' and contains(@class, 'AiOutlineSearch')]")
+    private WebElement searchIcon;
+    
+    @FindBy(xpath="//*[name()='svg' and contains(@class, 'HiOutlineShoppingBag')]")
+    private WebElement cartIcon;
+    
+    @FindBy(xpath="//img[@alt='company logo']")
+    private WebElement footerLogo;
+    
+    @FindBy(xpath="//a[contains(@href, 'instagram.com')]")
+    private WebElement instagramLink;
+    
+    @FindBy(xpath="//a[contains(@href, 'linkedin.com')]")
+    private WebElement linkedinLink;
+    
+    @FindBy(xpath="//a[contains(@href, 'facebook.com')]")
+    private WebElement facebookLink;
+    
+    @FindBy(xpath="//a[contains(@href, 'twitter.com')]")
+    private WebElement twitterLink;
+    
+    @FindBy(xpath="//a[@href='/privacy-policy']")
+    private WebElement privacyPolicyLink;
+    
+    @FindBy(xpath="//a[@href='/terms-and-conditions']")
+    private WebElement termsAndConditionsLink;
+    
+    @FindBy(xpath="//a[@href='/return-policy']")
+    private WebElement returnPolicyLink;
+    
+    // Constructor for initialization
+    public OurStoryPage(WebDriver driver) {
+        super(driver);
+        PageFactory.initElements(driver, this);
+    }
+    
+    // Utilization methods to interact with elements
+    public void clickShopNowButton() {
+        shopNowButton.click();
+    }
+    
+    public boolean verifyOurStoryPageTitle(String expectedTitle, SoftAssert softAssert) {
+        return verifyTitle(expectedTitle, softAssert);
+    }
+    
+    public boolean verifyOurStoryPageUrl(String expectedUrl, SoftAssert softAssert) {
+        return verifyUrl(expectedUrl, softAssert);
+    }
+    
+    public boolean verifyTextPresence(String expectedText, SoftAssert softAssert) {
+        return verifyTextPresent(expectedText, softAssert);
+    }
 }

@@ -1,5 +1,6 @@
-package pom.category_pages;
+package pom.contact_pages;
 
+import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -7,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.asserts.SoftAssert;
 import generic.Verification;
 
-public class SingleCategoryPage extends Verification {
+public class ReplyMessagePage extends Verification {
 
     // **Header Elements**
     @FindBy(xpath = "//header")
@@ -40,30 +41,33 @@ public class SingleCategoryPage extends Verification {
     @FindBy(xpath = "(//*[name()='svg'])[2]")
     private WebElement cartIcon;
 
-    // **Category Details Elements**
-    @FindBy(xpath = "//h2[contains(@class, 'text-3xl font-bold')]")
-    private WebElement categoryTitle;
+    // **Reply Message Page Elements**
+    @FindBy(xpath = "//h2[contains(text(),'Replies')]")
+    private WebElement repliesTitle;
 
-    @FindBy(xpath = "//a[@href='/all-categories']")
-    private WebElement allCategoriesLink;
+    @FindBy(xpath = "//h2[contains(@class,'text-2xl')]")
+    private WebElement messageText;
 
-    @FindBy(xpath = "//h3[contains(@class, 'text-lg font-semibold')]")
-    private WebElement categoryDetailsTitle;
+    @FindBy(xpath = "//p[contains(@class,'text-gray-800')]")
+    private WebElement fullMessageContent;
 
-    @FindBy(xpath = "//dt[contains(text(),'Category Name')]")
-    private WebElement categoryNameLabel;
+    @FindBy(xpath = "//span[contains(@class,'text-sm text-gray-700')]")
+    private WebElement senderDetails;
 
-    @FindBy(xpath = "//input[contains(@class, 'border px-2 py-1 rounded')]")
-    private WebElement categoryNameInput;
+    @FindBy(xpath = "//span[contains(@class,'text-sm text-gray-500')]")
+    private WebElement messageTimestamp;
 
-    @FindBy(xpath = "//button[contains(@class, 'bg-blue-500 text-white')]")
-    private WebElement editSaveButton;
+    @FindBy(xpath = "//h3[contains(text(),'Your Reply')]")
+    private WebElement yourReplyTitle;
 
-    @FindBy(xpath = "//dt[contains(text(),'Created At')]")
-    private WebElement createdAtLabel;
+    @FindBy(xpath = "//textarea[@placeholder='Type your reply here...']")
+    private WebElement replyInputField;
 
-    @FindBy(xpath = "//dd[contains(@class, 'text-gray-700')]")
-    private WebElement createdAtValue;
+    @FindBy(xpath = "//button[contains(text(),'Send Reply')]")
+    private WebElement sendReplyButton;
+
+    @FindBy(xpath = "//div[contains(@class,'border rounded-lg')]/p")
+    private List<WebElement> allReplies;
 
     // **Footer Elements**
     @FindBy(xpath = "//footer")
@@ -94,7 +98,7 @@ public class SingleCategoryPage extends Verification {
     private WebElement returnPolicyLink;
 
     // **Constructor for Initialization**
-    public SingleCategoryPage(WebDriver driver) {
+    public ReplyMessagePage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
@@ -140,38 +144,50 @@ public class SingleCategoryPage extends Verification {
         cartIcon.click();
     }
 
-    // **Category Page Methods**
-    public String getCategoryTitle() {
-        return categoryTitle.getText();
+    // **Reply Message Page Methods**
+    public String getRepliesTitle() {
+        return repliesTitle.getText();
     }
 
-    public boolean verifyCategoryTitle(SoftAssert softAssert, String expectedTitle) {
-        return verifyTextPresent(categoryTitle.getText(), softAssert);
+    public boolean verifyRepliesTitle(SoftAssert softAssert, String expectedTitle) {
+        return verifyTextPresent(repliesTitle.getText(), softAssert);
     }
 
-    public void clickAllCategoriesLink() {
-        allCategoriesLink.click();
+    public String getMessageText() {
+        return messageText.getText();
     }
 
-    public String getCategoryDetailsTitle() {
-        return categoryDetailsTitle.getText();
+    public String getFullMessageContent() {
+        return fullMessageContent.getText();
     }
 
-    public boolean isCategoryNameDisplayed() {
-        return categoryNameLabel.isDisplayed();
+    public String getSenderDetails() {
+        return senderDetails.getText();
     }
 
-    public void enterCategoryName(String categoryName) {
-        categoryNameInput.clear();
-        categoryNameInput.sendKeys(categoryName);
+    public String getMessageTimestamp() {
+        return messageTimestamp.getText();
     }
 
-    public void clickEditSaveButton() {
-        editSaveButton.click();
+    public String getYourReplyTitle() {
+        return yourReplyTitle.getText();
     }
 
-    public String getCreatedAtDate() {
-        return createdAtValue.getText();
+    public void enterReplyText(String replyText) {
+        replyInputField.clear();
+        replyInputField.sendKeys(replyText);
+    }
+
+    public void clickSendReplyButton() {
+        sendReplyButton.click();
+    }
+
+    public int getAllRepliesCount() {
+        return allReplies.size();
+    }
+
+    public String getReplyText(int index) {
+        return allReplies.get(index).getText();
     }
 
     // **Footer Methods**

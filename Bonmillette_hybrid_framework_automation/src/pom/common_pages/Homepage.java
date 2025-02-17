@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.asserts.SoftAssert;
+
 import generic.Verification;
 
 public class Homepage extends Verification
@@ -203,19 +205,16 @@ public class Homepage extends Verification
 		vegIcon100Percent.click();
 	}
 
-	public void verifyHomepageTitle(String expectedTitle) throws IOException {
-		verifyTitle(expectedTitle);
-	}
 
-	public void verifyHomepageUrl(String expectedUrl) throws IOException {
-		verifyUrl(expectedUrl);
-	}
-	
-	public void verifyHomepageTextPresence(String expectedText) throws IOException {
-		verifyTextPresent(expectedText);
-	}
+    public boolean verifyHomepageTitle(String expectedTitle, SoftAssert softAssert) {
+        return verifyTitle(expectedTitle, softAssert);
+    }
 
-	public void verifyHomepageTextAbsence(String unexpectedText) throws IOException {
-		verifyTextNotPresent(unexpectedText);
-	}
+    public boolean verifyHomepageUrl(String expectedUrl, SoftAssert softAssert) {
+        return verifyUrl(expectedUrl, softAssert);
+    }
+
+    public boolean verifyHomepageTextPresence(String expectedText, SoftAssert softAssert) {
+        return verifyTextPresent(expectedText, softAssert);
+    }
 }

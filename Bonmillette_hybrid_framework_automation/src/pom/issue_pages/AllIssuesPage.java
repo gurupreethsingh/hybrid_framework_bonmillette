@@ -1,13 +1,13 @@
-package pom.category_pages;
+package pom.issue_pages;
 
+import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.asserts.SoftAssert;
 import generic.Verification;
 
-public class SingleCategoryPage extends Verification {
+public class AllIssuesPage extends Verification {
 
     // **Header Elements**
     @FindBy(xpath = "//header")
@@ -40,30 +40,53 @@ public class SingleCategoryPage extends Verification {
     @FindBy(xpath = "(//*[name()='svg'])[2]")
     private WebElement cartIcon;
 
-    // **Category Details Elements**
-    @FindBy(xpath = "//h2[contains(@class, 'text-3xl font-bold')]")
-    private WebElement categoryTitle;
+    // **Page Title**
+    @FindBy(xpath = "//h2[contains(text(),'All Issues')]")
+    private WebElement allIssuesTitle;
 
-    @FindBy(xpath = "//a[@href='/all-categories']")
-    private WebElement allCategoriesLink;
+    // **Search Field**
+    @FindBy(xpath = "//input[@placeholder='Search issues...']")
+    private WebElement searchInput;
 
-    @FindBy(xpath = "//h3[contains(@class, 'text-lg font-semibold')]")
-    private WebElement categoryDetailsTitle;
+    // **View Toggle Buttons**
+    @FindBy(xpath = "//svg[contains(@class,'cursor-pointer')][1]")
+    private WebElement listViewButton;
 
-    @FindBy(xpath = "//dt[contains(text(),'Category Name')]")
-    private WebElement categoryNameLabel;
+    @FindBy(xpath = "//svg[contains(@class,'cursor-pointer')][2]")
+    private WebElement cardViewButton;
 
-    @FindBy(xpath = "//input[contains(@class, 'border px-2 py-1 rounded')]")
-    private WebElement categoryNameInput;
+    @FindBy(xpath = "//svg[contains(@class,'cursor-pointer')][3]")
+    private WebElement gridViewButton;
 
-    @FindBy(xpath = "//button[contains(@class, 'bg-blue-500 text-white')]")
-    private WebElement editSaveButton;
+    // **Issue Cards/Grid/List Elements**
+    @FindBy(xpath = "//div[contains(@class, 'grid grid-cols') or contains(@class, 'space-y-4')]")
+    private List<WebElement> issueCards;
 
-    @FindBy(xpath = "//dt[contains(text(),'Created At')]")
-    private WebElement createdAtLabel;
+    @FindBy(xpath = "//div[contains(@class, 'grid grid-cols')]/a")
+    private List<WebElement> issueLinks;
 
-    @FindBy(xpath = "//dd[contains(@class, 'text-gray-700')]")
-    private WebElement createdAtValue;
+    // **Pagination Elements**
+    @FindBy(xpath = "//div[contains(@class, 'mt-6')]/button")
+    private List<WebElement> paginationButtons;
+
+    // **Navigation Sidebar Elements**
+    @FindBy(xpath = "//ul[contains(@class,'space-y-4')]")
+    private WebElement navigationMenu;
+
+    @FindBy(xpath = "//a[contains(@href, 'dashboard')]")
+    private WebElement dashboardNavLink;
+
+    @FindBy(xpath = "//a[contains(@href, 'my-orders')]")
+    private WebElement ordersNavLink;
+
+    @FindBy(xpath = "//a[contains(@href, 'addresses')]")
+    private WebElement addressesNavLink;
+
+    @FindBy(xpath = "//a[contains(@href, 'profile')]")
+    private WebElement accountDetailsNavLink;
+
+    @FindBy(xpath = "//button[contains(text(),'Logout')]")
+    private WebElement logoutButton;
 
     // **Footer Elements**
     @FindBy(xpath = "//footer")
@@ -94,7 +117,7 @@ public class SingleCategoryPage extends Verification {
     private WebElement returnPolicyLink;
 
     // **Constructor for Initialization**
-    public SingleCategoryPage(WebDriver driver) {
+    public AllIssuesPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
@@ -140,38 +163,75 @@ public class SingleCategoryPage extends Verification {
         cartIcon.click();
     }
 
-    // **Category Page Methods**
-    public String getCategoryTitle() {
-        return categoryTitle.getText();
+    // **Page Title Verification**
+    public boolean verifyAllIssuesTitle() {
+        return allIssuesTitle.isDisplayed();
     }
 
-    public boolean verifyCategoryTitle(SoftAssert softAssert, String expectedTitle) {
-        return verifyTextPresent(categoryTitle.getText(), softAssert);
+    // **Search Methods**
+    public void enterSearchText(String searchText) {
+        searchInput.clear();
+        searchInput.sendKeys(searchText);
     }
 
-    public void clickAllCategoriesLink() {
-        allCategoriesLink.click();
+    // **View Toggle Methods**
+    public void clickListView() {
+        listViewButton.click();
     }
 
-    public String getCategoryDetailsTitle() {
-        return categoryDetailsTitle.getText();
+    public void clickCardView() {
+        cardViewButton.click();
     }
 
-    public boolean isCategoryNameDisplayed() {
-        return categoryNameLabel.isDisplayed();
+    public void clickGridView() {
+        gridViewButton.click();
     }
 
-    public void enterCategoryName(String categoryName) {
-        categoryNameInput.clear();
-        categoryNameInput.sendKeys(categoryName);
+    public boolean areIssuesDisplayed() {
+        return !issueCards.isEmpty();
     }
 
-    public void clickEditSaveButton() {
-        editSaveButton.click();
+    // **Issue Interaction Methods**
+    public void clickOnFirstIssue() {
+        if (!issueLinks.isEmpty()) {
+            issueLinks.get(0).click();
+        }
     }
 
-    public String getCreatedAtDate() {
-        return createdAtValue.getText();
+    public int getTotalIssuesCount() {
+        return issueCards.size();
+    }
+
+    // **Pagination Methods**
+    public boolean isPaginationDisplayed() {
+        return !paginationButtons.isEmpty();
+    }
+
+    public void clickOnPage(int pageNumber) {
+        if (pageNumber > 0 && pageNumber <= paginationButtons.size()) {
+            paginationButtons.get(pageNumber - 1).click();
+        }
+    }
+
+    // **Navigation Sidebar Methods**
+    public void clickDashboardNavLink() {
+        dashboardNavLink.click();
+    }
+
+    public void clickOrdersNavLink() {
+        ordersNavLink.click();
+    }
+
+    public void clickAddressesNavLink() {
+        addressesNavLink.click();
+    }
+
+    public void clickAccountDetailsNavLink() {
+        accountDetailsNavLink.click();
+    }
+
+    public void clickLogoutButton() {
+        logoutButton.click();
     }
 
     // **Footer Methods**

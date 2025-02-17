@@ -1,4 +1,4 @@
-package pom.admin_pages;
+package pom.common_pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,34 +8,31 @@ import org.testng.asserts.SoftAssert;
 
 import generic.Verification;
 
-public class AdminDashboardPage extends Verification {
+public class PrivacyPolicyPage extends Verification {
     
-    @FindBy(xpath="//h2[contains(text(),'Hello')]")
-    private WebElement dashboardGreeting;
+    @FindBy(xpath="//h1[contains(text(),'Privacy Policy')]")
+    private WebElement privacyPolicyTitle;
     
-    @FindBy(xpath="//h3[contains(text(),'Navigation')]")
-    private WebElement navigationTitle;
+    @FindBy(xpath="//p[contains(text(),'At our e-commerce store, we value your privacy')]")
+    private WebElement privacyPolicyDescription;
     
-    @FindBy(xpath="//a[contains(@href, '/superadmin-dashboard')]")
-    private WebElement superAdminDashboardLink;
+    @FindBy(xpath="//h2[contains(text(),'Information We Collect')]")
+    private WebElement informationWeCollectTitle;
     
-    @FindBy(xpath="//a[contains(@href, '/my-orders')]")
-    private WebElement manageOrdersLink;
+    @FindBy(xpath="//p[contains(text(),'We may collect personal information')]")
+    private WebElement informationWeCollectDescription;
     
-    @FindBy(xpath="//a[contains(@href, '/all-users')]")
-    private WebElement manageUsersLink;
+    @FindBy(xpath="//h2[contains(text(),'How We Use Your Information')]")
+    private WebElement howWeUseYourInformationTitle;
     
-    @FindBy(xpath="//a[contains(@href, '/profile')]")
-    private WebElement accountDetailsLink;
+    @FindBy(xpath="//p[contains(text(),'Your information is used to process transactions')]")
+    private WebElement howWeUseYourInformationDescription;
     
-    @FindBy(xpath="//button[contains(text(),'Logout')]")
-    private WebElement logoutButton;
+    @FindBy(xpath="//h2[contains(text(),'Contact Us')]")
+    private WebElement contactUsTitle;
     
-    @FindBy(xpath="//a[contains(@href, '/all-orders')]")
-    private WebElement allOrdersLink;
-    
-    @FindBy(xpath="//a[contains(@href, '/all-categories')]")
-    private WebElement allCategoriesLink;
+    @FindBy(xpath="//p[contains(text(),'If you have any questions about our privacy practices')]")
+    private WebElement contactUsDescription;
     
     // Header and Footer elements
     @FindBy(xpath="//img[@alt='Logo']")
@@ -93,21 +90,17 @@ public class AdminDashboardPage extends Verification {
     private WebElement returnPolicyLink;
     
     // Constructor for initialization
-    public AdminDashboardPage(WebDriver driver) {
+    public PrivacyPolicyPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
     
     // Utilization methods to interact with elements
-    public void clickLogoutButton() {
-        logoutButton.click();
-    }
-    
-    public boolean verifyAdminDashboardTitle(String expectedTitle, SoftAssert softAssert) {
+    public boolean verifyPrivacyPolicyTitle(String expectedTitle, SoftAssert softAssert) {
         return verifyTitle(expectedTitle, softAssert);
     }
     
-    public boolean verifyAdminDashboardUrl(String expectedUrl, SoftAssert softAssert) {
+    public boolean verifyPrivacyPolicyUrl(String expectedUrl, SoftAssert softAssert) {
         return verifyUrl(expectedUrl, softAssert);
     }
     
@@ -115,3 +108,4 @@ public class AdminDashboardPage extends Verification {
         return verifyTextPresent(expectedText, softAssert);
     }
 }
+

@@ -1,5 +1,6 @@
-package pom.category_pages;
+package pom.contact_pages;
 
+import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -7,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.asserts.SoftAssert;
 import generic.Verification;
 
-public class SingleCategoryPage extends Verification {
+public class AllMessagesPage extends Verification {
 
     // **Header Elements**
     @FindBy(xpath = "//header")
@@ -40,30 +41,30 @@ public class SingleCategoryPage extends Verification {
     @FindBy(xpath = "(//*[name()='svg'])[2]")
     private WebElement cartIcon;
 
-    // **Category Details Elements**
-    @FindBy(xpath = "//h2[contains(@class, 'text-3xl font-bold')]")
-    private WebElement categoryTitle;
+    // **Messages Page Elements**
+    @FindBy(xpath = "//h2[contains(text(),'Messages')]")
+    private WebElement messagesTitle;
 
-    @FindBy(xpath = "//a[@href='/all-categories']")
-    private WebElement allCategoriesLink;
+    @FindBy(xpath = "//input[@placeholder='Search messages...']")
+    private WebElement searchField;
 
-    @FindBy(xpath = "//h3[contains(@class, 'text-lg font-semibold')]")
-    private WebElement categoryDetailsTitle;
+    @FindBy(xpath = "//button[contains(text(),'Newest First')]")
+    private WebElement newestFirstButton;
 
-    @FindBy(xpath = "//dt[contains(text(),'Category Name')]")
-    private WebElement categoryNameLabel;
+    @FindBy(xpath = "//button[contains(text(),'Oldest First')]")
+    private WebElement oldestFirstButton;
 
-    @FindBy(xpath = "//input[contains(@class, 'border px-2 py-1 rounded')]")
-    private WebElement categoryNameInput;
+    @FindBy(xpath = "//div[contains(@class, 'grid')]/div")
+    private List<WebElement> messageList;
 
-    @FindBy(xpath = "//button[contains(@class, 'bg-blue-500 text-white')]")
-    private WebElement editSaveButton;
+    @FindBy(xpath = "//button[contains(@class,'bg-indigo-600')]/span[text()='Previous']")
+    private WebElement previousPageButton;
 
-    @FindBy(xpath = "//dt[contains(text(),'Created At')]")
-    private WebElement createdAtLabel;
+    @FindBy(xpath = "//button[contains(@class,'bg-indigo-600')]/span[text()='Next']")
+    private WebElement nextPageButton;
 
-    @FindBy(xpath = "//dd[contains(@class, 'text-gray-700')]")
-    private WebElement createdAtValue;
+    @FindBy(xpath = "//span[contains(text(),'Page')]")
+    private WebElement pageNumberText;
 
     // **Footer Elements**
     @FindBy(xpath = "//footer")
@@ -94,7 +95,7 @@ public class SingleCategoryPage extends Verification {
     private WebElement returnPolicyLink;
 
     // **Constructor for Initialization**
-    public SingleCategoryPage(WebDriver driver) {
+    public AllMessagesPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
@@ -140,38 +141,46 @@ public class SingleCategoryPage extends Verification {
         cartIcon.click();
     }
 
-    // **Category Page Methods**
-    public String getCategoryTitle() {
-        return categoryTitle.getText();
+    // **Messages Page Methods**
+    public String getMessagesTitle() {
+        return messagesTitle.getText();
     }
 
-    public boolean verifyCategoryTitle(SoftAssert softAssert, String expectedTitle) {
-        return verifyTextPresent(categoryTitle.getText(), softAssert);
+    public boolean verifyMessagesTitle(SoftAssert softAssert, String expectedTitle) {
+        return verifyTextPresent(messagesTitle.getText(), softAssert);
     }
 
-    public void clickAllCategoriesLink() {
-        allCategoriesLink.click();
+    public void enterSearchText(String searchText) {
+        searchField.clear();
+        searchField.sendKeys(searchText);
     }
 
-    public String getCategoryDetailsTitle() {
-        return categoryDetailsTitle.getText();
+    public void clickNewestFirstButton() {
+        newestFirstButton.click();
     }
 
-    public boolean isCategoryNameDisplayed() {
-        return categoryNameLabel.isDisplayed();
+    public void clickOldestFirstButton() {
+        oldestFirstButton.click();
     }
 
-    public void enterCategoryName(String categoryName) {
-        categoryNameInput.clear();
-        categoryNameInput.sendKeys(categoryName);
+    public int getMessageCount() {
+        return messageList.size();
     }
 
-    public void clickEditSaveButton() {
-        editSaveButton.click();
+    public void clickMessage(int index) {
+        messageList.get(index).click();
     }
 
-    public String getCreatedAtDate() {
-        return createdAtValue.getText();
+    public void clickPreviousPage() {
+        previousPageButton.click();
+    }
+
+    public void clickNextPage() {
+        nextPageButton.click();
+    }
+
+    public String getCurrentPageNumber() {
+        return pageNumberText.getText();
     }
 
     // **Footer Methods**

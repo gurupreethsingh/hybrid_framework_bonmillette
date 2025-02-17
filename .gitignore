@@ -1,6 +1,41 @@
-test-output
+# **Ignore Eclipse & IntelliJ IDEA Project Files**
 .classpath
 .project
-testng.xml
-failed_screenshots
-.settings
+.settings/
+.idea/
+*.iml
+*.iws
+
+# **Ignore Maven Target Folder (Compiled Files)**
+target/
+*.jar
+*.war
+*.ear
+
+# **Ignore Test Reports & Logs**
+test-output/
+surefire-reports/
+extent-reports/
+allure-results/
+allure-report/
+logs/
+failed_screenshots/
+
+# **Ignore IDE-Specific Configurations**
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# **Ignore OS-Specific Files**
+.DS_Store
+Thumbs.db
+
+# **Ignore Dependency Caches**
+.mvn/
+mvnw
+mvnw.cmd
+
+# **Ignore Environment Configuration Files**
+*.properties
+*.env
+config/

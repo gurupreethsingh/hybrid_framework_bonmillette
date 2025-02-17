@@ -1,5 +1,6 @@
-package pom.category_pages;
+package pom.employees_pages;
 
+import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -7,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.asserts.SoftAssert;
 import generic.Verification;
 
-public class SingleCategoryPage extends Verification {
+public class EmployeeDashboardPage extends Verification {
 
     // **Header Elements**
     @FindBy(xpath = "//header")
@@ -40,30 +41,40 @@ public class SingleCategoryPage extends Verification {
     @FindBy(xpath = "(//*[name()='svg'])[2]")
     private WebElement cartIcon;
 
-    // **Category Details Elements**
-    @FindBy(xpath = "//h2[contains(@class, 'text-3xl font-bold')]")
-    private WebElement categoryTitle;
+    // **Dashboard Elements**
+    @FindBy(xpath = "//h2[contains(text(),'Employee Dashboard')]")
+    private WebElement employeeDashboardTitle;
 
-    @FindBy(xpath = "//a[@href='/all-categories']")
-    private WebElement allCategoriesLink;
+    @FindBy(xpath = "//input[@placeholder='Search cards...']")
+    private WebElement searchInput;
 
-    @FindBy(xpath = "//h3[contains(@class, 'text-lg font-semibold')]")
-    private WebElement categoryDetailsTitle;
+    @FindBy(xpath = "//a[contains(@href, 'assigned-issue')]")
+    private WebElement assignedTasksCard;
 
-    @FindBy(xpath = "//dt[contains(text(),'Category Name')]")
-    private WebElement categoryNameLabel;
+    @FindBy(xpath = "//p[contains(text(),'Assigned Tasks')]")
+    private WebElement assignedTasksText;
 
-    @FindBy(xpath = "//input[contains(@class, 'border px-2 py-1 rounded')]")
-    private WebElement categoryNameInput;
+    @FindBy(xpath = "//div[contains(@class,'grid grid-cols')]")
+    private List<WebElement> dashboardCards;
 
-    @FindBy(xpath = "//button[contains(@class, 'bg-blue-500 text-white')]")
-    private WebElement editSaveButton;
+    // **Navigation Sidebar Elements**
+    @FindBy(xpath = "//ul[contains(@class,'space-y-4')]")
+    private WebElement navigationMenu;
 
-    @FindBy(xpath = "//dt[contains(text(),'Created At')]")
-    private WebElement createdAtLabel;
+    @FindBy(xpath = "//a[contains(@href, 'employee-dashboard')]")
+    private WebElement dashboardNavLink;
 
-    @FindBy(xpath = "//dd[contains(@class, 'text-gray-700')]")
-    private WebElement createdAtValue;
+    @FindBy(xpath = "//a[contains(@href, 'my-orders')]")
+    private WebElement ordersNavLink;
+
+    @FindBy(xpath = "//a[contains(@href, 'addresses')]")
+    private WebElement addressesNavLink;
+
+    @FindBy(xpath = "//a[contains(@href, 'profile')]")
+    private WebElement accountDetailsNavLink;
+
+    @FindBy(xpath = "//button[contains(text(),'Logout')]")
+    private WebElement logoutButton;
 
     // **Footer Elements**
     @FindBy(xpath = "//footer")
@@ -94,7 +105,7 @@ public class SingleCategoryPage extends Verification {
     private WebElement returnPolicyLink;
 
     // **Constructor for Initialization**
-    public SingleCategoryPage(WebDriver driver) {
+    public EmployeeDashboardPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
@@ -140,38 +151,47 @@ public class SingleCategoryPage extends Verification {
         cartIcon.click();
     }
 
-    // **Category Page Methods**
-    public String getCategoryTitle() {
-        return categoryTitle.getText();
+    // **Dashboard Methods**
+    public boolean verifyEmployeeDashboardTitle(SoftAssert softAssert, String expectedTitle) {
+        return verifyTextPresent(employeeDashboardTitle.getText(), softAssert);
     }
 
-    public boolean verifyCategoryTitle(SoftAssert softAssert, String expectedTitle) {
-        return verifyTextPresent(categoryTitle.getText(), softAssert);
+    public void enterSearchText(String searchText) {
+        searchInput.clear();
+        searchInput.sendKeys(searchText);
     }
 
-    public void clickAllCategoriesLink() {
-        allCategoriesLink.click();
+    public void clickAssignedTasksCard() {
+        assignedTasksCard.click();
     }
 
-    public String getCategoryDetailsTitle() {
-        return categoryDetailsTitle.getText();
+    public boolean isAssignedTasksTextDisplayed() {
+        return assignedTasksText.isDisplayed();
     }
 
-    public boolean isCategoryNameDisplayed() {
-        return categoryNameLabel.isDisplayed();
+    public boolean areDashboardCardsDisplayed() {
+        return !dashboardCards.isEmpty();
     }
 
-    public void enterCategoryName(String categoryName) {
-        categoryNameInput.clear();
-        categoryNameInput.sendKeys(categoryName);
+    // **Navigation Sidebar Methods**
+    public void clickDashboardNavLink() {
+        dashboardNavLink.click();
     }
 
-    public void clickEditSaveButton() {
-        editSaveButton.click();
+    public void clickOrdersNavLink() {
+        ordersNavLink.click();
     }
 
-    public String getCreatedAtDate() {
-        return createdAtValue.getText();
+    public void clickAddressesNavLink() {
+        addressesNavLink.click();
+    }
+
+    public void clickAccountDetailsNavLink() {
+        accountDetailsNavLink.click();
+    }
+
+    public void clickLogoutButton() {
+        logoutButton.click();
     }
 
     // **Footer Methods**

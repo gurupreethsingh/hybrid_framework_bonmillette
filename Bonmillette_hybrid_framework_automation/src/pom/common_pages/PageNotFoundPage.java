@@ -1,5 +1,6 @@
-package pom.admin_pages;
+package pom.common_pages;
 
+import java.io.IOException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,34 +9,22 @@ import org.testng.asserts.SoftAssert;
 
 import generic.Verification;
 
-public class AdminDashboardPage extends Verification {
+public class PageNotFoundPage extends Verification {
     
-    @FindBy(xpath="//h2[contains(text(),'Hello')]")
-    private WebElement dashboardGreeting;
+    @FindBy(xpath="//p[contains(text(),'404')]")
+    private WebElement errorCode;
     
-    @FindBy(xpath="//h3[contains(text(),'Navigation')]")
-    private WebElement navigationTitle;
+    @FindBy(xpath="//h1[contains(text(),'Page not found')]")
+    private WebElement pageNotFoundTitle;
     
-    @FindBy(xpath="//a[contains(@href, '/superadmin-dashboard')]")
-    private WebElement superAdminDashboardLink;
+    @FindBy(xpath="//p[contains(text(),'Sorry, we couldn’t find the page you’re looking for.')]")
+    private WebElement pageNotFoundMessage;
     
-    @FindBy(xpath="//a[contains(@href, '/my-orders')]")
-    private WebElement manageOrdersLink;
+    @FindBy(xpath="//a[@href='/' and contains(text(),'Go back home')]")
+    private WebElement goBackHomeButton;
     
-    @FindBy(xpath="//a[contains(@href, '/all-users')]")
-    private WebElement manageUsersLink;
-    
-    @FindBy(xpath="//a[contains(@href, '/profile')]")
-    private WebElement accountDetailsLink;
-    
-    @FindBy(xpath="//button[contains(text(),'Logout')]")
-    private WebElement logoutButton;
-    
-    @FindBy(xpath="//a[contains(@href, '/all-orders')]")
-    private WebElement allOrdersLink;
-    
-    @FindBy(xpath="//a[contains(@href, '/all-categories')]")
-    private WebElement allCategoriesLink;
+    @FindBy(xpath="//a[@href='/contact-us' and contains(text(),'Contact support')]")
+    private WebElement contactSupportLink;
     
     // Header and Footer elements
     @FindBy(xpath="//img[@alt='Logo']")
@@ -93,21 +82,25 @@ public class AdminDashboardPage extends Verification {
     private WebElement returnPolicyLink;
     
     // Constructor for initialization
-    public AdminDashboardPage(WebDriver driver) {
+    public PageNotFoundPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
     
     // Utilization methods to interact with elements
-    public void clickLogoutButton() {
-        logoutButton.click();
+    public void clickGoBackHomeButton() {
+        goBackHomeButton.click();
     }
     
-    public boolean verifyAdminDashboardTitle(String expectedTitle, SoftAssert softAssert) {
+    public void clickContactSupportLink() {
+        contactSupportLink.click();
+    }
+    
+    public boolean verifyPageNotFoundTitle(String expectedTitle, SoftAssert softAssert) {
         return verifyTitle(expectedTitle, softAssert);
     }
     
-    public boolean verifyAdminDashboardUrl(String expectedUrl, SoftAssert softAssert) {
+    public boolean verifyPageNotFoundUrl(String expectedUrl, SoftAssert softAssert) {
         return verifyUrl(expectedUrl, softAssert);
     }
     
