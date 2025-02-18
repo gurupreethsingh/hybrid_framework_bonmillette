@@ -39,3 +39,4 @@ mvnw.cmd
 *.properties
 *.env
 config/
+/.metadata/

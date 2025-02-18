@@ -7,7 +7,7 @@
         </Console>
 
         <!-- File Log Output -->
-        <File name="File" fileName="logs/test-results.log">
+        <File name="File" fileName="logs/blog_test-results.log">
             <PatternLayout>
                 <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p %c{1} - %m%n</Pattern>
             </PatternLayout>
