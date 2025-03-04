@@ -207,7 +207,7 @@ public class Homepage extends Verification
 
 
     public boolean verifyHomepageTitle(String expectedTitle, SoftAssert softAssert) {
-        return verifyTitle(expectedTitle, softAssert);
+        return verifyTitle(expectedTitle, softAssert); // Verfication class
     }
 
     public boolean verifyHomepageUrl(String expectedUrl, SoftAssert softAssert) {

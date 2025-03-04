@@ -36,7 +36,6 @@ public class TestOpenHomepage extends OpenClose {
         } else {
             log.error("Test Failed: Expected '" + expectedHomepageTitle + "' but found '" + driver.getTitle() + "'");
         }
-
         softAssert.assertAll(); // ✅ Collect all failures at the end
     }
 
@@ -62,7 +61,6 @@ public class TestOpenHomepage extends OpenClose {
         String expectedAllBlogspageUrl = (String)Excel.getData("bonmillette_titles", 5, 1);
         boolean allBlogspageUrlMatched = abp.verifyAllBlogspageUrl(expectedAllBlogspageUrl, softAssert);
 
-        
         softAssert.assertTrue(allBlogspageUrlMatched, "Blog page Url verification failed.");
         
         if (allBlogspageUrlMatched) {
@@ -70,7 +68,6 @@ public class TestOpenHomepage extends OpenClose {
         } else {
             log.error("Test Failed: Expected '" + expectedAllBlogspageUrl + "' but found '" + driver.getCurrentUrl() + "'");
         }
-       
         softAssert.assertAll(); // ✅ Collect assertion failures at the end
     }
 }
